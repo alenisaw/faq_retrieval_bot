@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.env
+
+# Артефакты, которые пересобираются пунктом 3 меню / src.experiments
+backend/models/
+backend/data/processed/cache/
+
+# Кэш Hugging Face, если модели качаются внутрь проекта
+.cache/
+
+# IDE и ОС
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Next.js (frontend)
+frontend/node_modules/
+frontend/.next/

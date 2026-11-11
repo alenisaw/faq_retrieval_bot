@@ -1,0 +1,33 @@
+# Python 3.11+ (проверено на 3.12). Установка: pip install -r requirements.txt
+
+# --- данные ---
+pandas==3.1.1
+numpy==2.5.4
+pyarrow==26.0.1
+scipy==1.18.1
+
+# --- предобработка (AI-модуль) ---
+nltk==3.10.4                      # punkt_tab и stopwords скачиваются при первом запуске
+pymorphy3==2.0.6
+pymorphy3-dicts-ru==2.4.417150.4580142
+spacy==3.8.18                     # только для сравнения лемматизаторов
+ru_core_news_sm @ https://github.com/explosion/spacy-models/releases/download/ru_core_news_sm-3.8.0/ru_core_news_sm-3.8.0-py3-none-any.whl
+
+# --- поиск и модели (AI-модуль) ---
+scikit-learn==1.9.1
+rank-bm25==0.2.2
+sentence-transformers==6.3.0
+transformers==5.22.2
+huggingface_hub==2.4.0
+# torch ставится вместе с sentence-transformers. Без GPU (локально, Docker)
+# быстрее и легче CPU-сборка:
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu
+torch>=2.2
+joblib==1.6.0
+
+# --- оценка и графики ---
+matplotlib==3.11.2
+psutil==7.2.2
+
+# --- тесты ---
+pytest==9.2.0

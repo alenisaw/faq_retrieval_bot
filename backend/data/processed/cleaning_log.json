@@ -1,0 +1,2289 @@
+{
+  "created_at": "2026-11-12T11:17:38",
+  "source": "QA_addmissionAitu.csv",
+  "rows_raw": 608,
+  "rows_clean": 535,
+  "rows_dropped": 73,
+  "answer_clusters": 470,
+  "clusters_with_2plus": 50,
+  "orig_classes_raw": 422,
+  "topics": {
+    "student_life": 84,
+    "programs": 81,
+    "admission": 79,
+    "scores_grants": 76,
+    "study_process": 53,
+    "about": 42,
+    "tuition": 33,
+    "military": 26,
+    "masters": 25,
+    "contacts": 16,
+    "dormitory": 11,
+    "creative_exam": 9
+  },
+  "memory_mb": {
+    "before_optimize": 0.3021,
+    "after_optimize": 0.2899
+  },
+  "dtypes": {
+    "faq_id": "int32",
+    "question": "str",
+    "answer": "str",
+    "orig_class": "str",
+    "topic": "category",
+    "answer_cluster": "int32",
+    "is_dated": "bool"
+  },
+  "audit": [
+    {
+      "rule": "header_row",
+      "description": "повтор строки заголовка внутри файла",
+      "dropped": 1,
+      "fixed": 0
+    },
+    {
+      "rule": "broken_csv_row",
+      "description": "строка разрезана запятой, хвост ответа попал в класс",
+      "dropped": 3,
+      "fixed": 0
+    },
+    {
+      "rule": "answer_in_question",
+      "description": "ответ записан внутри вопроса",
+      "dropped": 0,
+      "fixed": 1
+    },
+    {
+      "rule": "question_prefix",
+      "description": "служебный префикс «Вопрос N:»",
+      "dropped": 0,
+      "fixed": 1
+    },
+    {
+      "rule": "whitespace_quotes",
+      "description": "лишние пробелы, внешние кавычки, литеральные \\n",
+      "dropped": 0,
+      "fixed": 180
+    },
+    {
+      "rule": "answer_is_slug",
+      "description": "вместо ответа — идентификатор (AITU_iot)",
+      "dropped": 10,
+      "fixed": 0
+    },
+    {
+      "rule": "translation_not_answer",
+      "description": "не вопрос: пункт учебного плана и его перевод на английский",
+      "dropped": 21,
+      "fixed": 0
+    },
+    {
+      "rule": "empty_answer",
+      "description": "пустой ответ («не представлена в данном контексте»)",
+      "dropped": 1,
+      "fixed": 0
+    },
+    {
+      "rule": "duplicate_pair",
+      "description": "точный дубль пары вопрос–ответ",
+      "dropped": 37,
+      "fixed": 0
+    },
+    {
+      "rule": "topic_harmonized",
+      "description": "тема строки заменена на тему её кластера",
+      "dropped": 0,
+      "fixed": 2
+    },
+    {
+      "rule": "answer_cluster",
+      "description": "строк в кластерах из 2+ FAQ (не удаляются)",
+      "dropped": 0,
+      "fixed": 115
+    },
+    {
+      "rule": "is_dated",
+      "description": "ответ с датой/годом/«Нур-Султан» (помечен флагом)",
+      "dropped": 0,
+      "fixed": 17
+    },
+    {
+      "rule": "no_question_mark",
+      "description": "вопрос без «?» (заголовок вида «Устав»), оставлен",
+      "dropped": 0,
+      "fixed": 13
+    }
+  ],
+  "entries": [
+    {
+      "faq_id": 7,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 31,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 32,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 34,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 35,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 43,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 65,
+      "rule": "broken_csv_row",
+      "action": "dropped",
+      "before": {
+        "q": "1. Информационные технологии",
+        "a": " для которых требуются профильные предметы математика и информатика",
+        "c": " а минимальный балл - 85."
+      },
+      "after": "для которых требуются профильные предметы математика и информатика, а минимальный балл - 85.",
+      "detail": "после склейки нет вопроса или ответ оборван"
+    },
+    {
+      "faq_id": 78,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 79,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 80,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 81,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 82,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 83,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 84,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 85,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 86,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 87,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 88,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 89,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 90,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 91,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 92,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 93,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 94,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 95,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 96,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 97,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 98,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 99,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 100,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 101,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 102,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 103,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 104,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 105,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 106,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 107,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 108,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 109,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 110,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 111,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 112,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 113,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 114,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 115,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 122,
+      "rule": "broken_csv_row",
+      "action": "dropped",
+      "before": {
+        "q": "Какие карьерные возможности у специальности Mathematical & Computational Science (Математические и вычислительные науки)?",
+        "a": " \"После получения образования по этой специальности",
+        "c": " выпускники могут стать:"
+      },
+      "after": "После получения образования по этой специальности, выпускники могут стать:",
+      "detail": "после склейки нет вопроса или ответ оборван"
+    },
+    {
+      "faq_id": 133,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 134,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 135,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 136,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 137,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 138,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 139,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 140,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 141,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 142,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 143,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 145,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 165,
+      "rule": "answer_is_slug",
+      "action": "dropped",
+      "before": {
+        "q": "Основы умных технологий: Введение в концепцию умных технологий, Роль и применение умных технологий в различных сферах, О",
+        "a": "AITU_smart_tech_basics"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 166,
+      "rule": "answer_is_slug",
+      "action": "dropped",
+      "before": {
+        "q": "Интернет вещей (IoT): Архитектура и концепции IoT, Устройства, сенсоры и протоколы связи IoT, Методы сбора, передачи и а",
+        "a": "AITU_iot"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 167,
+      "rule": "answer_is_slug",
+      "action": "dropped",
+      "before": {
+        "q": "Системы умного дома: Автоматизация освещения, отопления и кондиционирования в умных домах, Системы безопасности и контро",
+        "a": "AITU_smart_home"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 168,
+      "rule": "answer_is_slug",
+      "action": "dropped",
+      "before": {
+        "q": "Умные города: Создание интеллектуальных городских систем, Управление транспортом в умных городах, Мониторинг окружающей ",
+        "a": "AITU_smart_cities"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 169,
+      "rule": "answer_is_slug",
+      "action": "dropped",
+      "before": {
+        "q": "Безопасность умных технологий: Защита данных и персональной информации в умных системах, Кибербезопасность в умных техно",
+        "a": "AITU_smart_security"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 170,
+      "rule": "answer_is_slug",
+      "action": "dropped",
+      "before": {
+        "q": "Искусственный интеллект (ИИ): Введение в основы и методы искусственного интеллекта, Применение машинного обучения и глуб",
+        "a": "AITU_ai_in_smart_tech"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 171,
+      "rule": "answer_is_slug",
+      "action": "dropped",
+      "before": {
+        "q": "Большие данные и анализ данных: Методы сбора, хранения и обработки больших объемов данных, Применение машинного обучения",
+        "a": "AITU_big_data_analytics"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 172,
+      "rule": "answer_is_slug",
+      "action": "dropped",
+      "before": {
+        "q": "Распределенные системы и облачные вычисления: Архитектура распределенных систем, Облачные технологии и применение облачн",
+        "a": "AITU_distributed_cloud_computing"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 173,
+      "rule": "answer_is_slug",
+      "action": "dropped",
+      "before": {
+        "q": "Робототехника и автономные системы: Основы разработки и программирования роботов, Взаимодействие роботов и автономных си",
+        "a": "AITU_robotics_and_autonomous_systems"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 174,
+      "rule": "answer_is_slug",
+      "action": "dropped",
+      "before": {
+        "q": "Этические и юридические аспекты умных технологий: Обсуждение этических и юридических вопросов, связанных с использование",
+        "a": "AITU_ethics_legislation_smart_tech"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 177,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 178,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 179,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 180,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 181,
+      "rule": "translation_not_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Технический аспект предпринимательства: понимание технологических аспектов IT-проектов, разработка и управление техничес",
+        "a": "Technical aspect of entrepreneurship: understanding technological aspects of IT projects, development and management of "
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 182,
+      "rule": "translation_not_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Финансирование стартапов: источники финансирования стартапов, бизнес-ангелы, венчурные капиталы, гранты, привлечение инв",
+        "a": "Startup financing: sources of startup funding, business angels, venture capital, grants, attracting investments, and sta"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 183,
+      "rule": "translation_not_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Управление командой и рост предпринимательского проекта: построение и управление командой, развитие лидерских навыков, у",
+        "a": "Team management and growth of entrepreneurial projects: team building and management, leadership development, business g"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 184,
+      "rule": "translation_not_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Правовые аспекты и интеллектуальная собственность: основы юридических аспектов предпринимательства, регистрация бизнеса,",
+        "a": "Legal aspects and intellectual property: basics of legal aspects in entrepreneurship, business registration, intellectua"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 185,
+      "rule": "translation_not_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Управление рисками и стратегическое планирование: оценка и управление рисками в предпринимательском проекте, стратегичес",
+        "a": "Risk management and strategic planning: risk assessment and management in entrepreneurial projects, strategic planning, "
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 186,
+      "rule": "translation_not_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Экосистема стартапов и связи с индустрией: знакомство с инкубаторами, акселераторами, технопарками и другими элементами ",
+        "a": "Startup ecosystem and industry connections: introduction to incubators, accelerators, technology parks, and other elemen"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 187,
+      "rule": "translation_not_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Основы предпринимательства: введение в предпринимательскую деятельность, основные концепции и принципы предпринимательст",
+        "a": "Introduction to entrepreneurship: Introduction to entrepreneurial activities, basic concepts and principles of entrepren"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 188,
+      "rule": "translation_not_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Инновации и идеи в IT: стимулирование и развитие инновационных идей в области информационных технологий, обнаружение рын",
+        "a": "Innovations and ideas in IT: stimulation and development of innovative ideas in the field of information technology, ide"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 189,
+      "rule": "translation_not_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Развитие бизнес-модели: проектирование и анализ бизнес-модели, исследование рынка и целевой аудитории, определение уника",
+        "a": "Business model development: design and analysis of business models, market research and target audience, defining unique"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 190,
+      "rule": "translation_not_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Технический аспект предпринимательства: понимание технологических аспектов IT-проектов, разработка и управление техничес",
+        "a": "Technical aspect of entrepreneurship: understanding technological aspects of IT projects, development and management of "
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 192,
+      "rule": "translation_not_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Маркетинг и продвижение: основы маркетинга для IT-предпринимателей, стратегии продвижения продукта и привлечение клиенто",
+        "a": "Marketing and promotion: basics of marketing for IT entrepreneurs, product promotion strategies, customer acquisition, d"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 197,
+      "rule": "translation_not_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Основы журналистики: введение в профессию журналиста, основные принципы и этические стандарты, роль и значимость журнали",
+        "a": "Introduction to journalism: Introduction to the journalism profession, basic principles and ethical standards, the role "
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 198,
+      "rule": "translation_not_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Цифровые навыки для журналиста: освоение инструментов и технологий, используемых в цифровой журналистике, включая работу",
+        "a": "Digital skills for journalists: Mastering the tools and technologies used in digital journalism, including working with "
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 199,
+      "rule": "translation_not_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Репортаж и редактирование в цифровой среде: методы сбора и анализа информации, интервьюирование, написание статей и репо",
+        "a": "Reporting and editing in the digital environment: Methods of gathering and analyzing information, conducting interviews,"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 200,
+      "rule": "translation_not_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Исследовательская журналистика и данных: использование цифровых инструментов и методов для проведения исследовательской ",
+        "a": "Investigative journalism and data: Using digital tools and methods for investigative journalism, working with large volu"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 201,
+      "rule": "translation_not_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Мобильная журналистика: использование мобильных устройств и приложений для съемки, редактирования и публикации контента ",
+        "a": "Mobile journalism: Using mobile devices and applications for shooting, editing, and publishing content on location, stre"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 202,
+      "rule": "translation_not_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Социальные медиа и цифровой маркетинг: стратегии использования социальных медиа в журналистике, распространение контента",
+        "a": "Social media and digital marketing: Strategies for using social media in journalism, content distribution through social"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 203,
+      "rule": "translation_not_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Аналитика и измерение успеха: использование инструментов аналитики для измерения эффективности контента, анализ поведени",
+        "a": "Analytics and measuring success: Using analytics tools to measure content effectiveness, analyzing audience behavior, op"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 204,
+      "rule": "translation_not_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Юридические и этические аспекты цифровой журналистики: правовые ограничения и нормы, связанные с публикацией контента в ",
+        "a": "Legal and ethical aspects of digital journalism: Legal restrictions and norms related to content publication on the web,"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 205,
+      "rule": "translation_not_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Интерактивная журналистика и взаимодействие с аудиторией: создание интерактивного контента, использование инструментов д",
+        "a": "Interactive journalism and audience engagement: Creating interactive content, using tools to engage with the audience, t"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 206,
+      "rule": "translation_not_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Тенденции и инновации в цифровой журналистике: изучение актуальных тенденций и новых технологий в цифровой журналистике,",
+        "a": "Trends and innovations in digital journalism: Studying current trends and new technologies in digital journalism, includ"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 207,
+      "rule": "header_row",
+      "action": "dropped",
+      "before": "questions | answers | classes",
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 208,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 209,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 210,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 211,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "question, class"
+    },
+    {
+      "faq_id": 212,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 213,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 214,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 215,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 216,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 217,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 218,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 219,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 220,
+      "rule": "answer_in_question",
+      "action": "fixed",
+      "before": {
+        "q": "Где кабинет 1с?, ответ:  Кабинет 1с находится на втором этаже первого блока - С.1.1.239.",
+        "a": " \"Расположение кабинета 1С\""
+      },
+      "after": {
+        "q": "Где кабинет 1с?",
+        "a": "Кабинет 1с находится на втором этаже первого блока - С.1.1.239."
+      },
+      "detail": ""
+    },
+    {
+      "faq_id": 220,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 221,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 222,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 223,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 226,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 227,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 228,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 306,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 309,
+      "rule": "broken_csv_row",
+      "action": "dropped",
+      "before": {
+        "q": "НИЦ Smartcity - ведет исследования по созданию интеллектуальных решений для умных городов будущего через науку",
+        "a": " инновации и успешные коллаборации",
+        "c": " с использованием информационно-коммуникационных технологий и искусственного интеллекта."
+      },
+      "after": "инновации и успешные коллаборации, с использованием информационно-коммуникационных технологий и искусственного интеллекта.",
+      "detail": "после склейки нет вопроса или ответ оборван"
+    },
+    {
+      "faq_id": 320,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 339,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 342,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 343,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 346,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 350,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 356,
+      "rule": "question_prefix",
+      "action": "fixed",
+      "before": "Вопрос 1: Какие виды скидок предоставляются обучающимся на платной основе в бакалавриате на первом курсе?",
+      "after": "Какие виды скидок предоставляются обучающимся на платной основе в бакалавриате на первом курсе?",
+      "detail": ""
+    },
+    {
+      "faq_id": 356,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 362,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 363,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 366,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 470,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 471,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 472,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 473,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 474,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 475,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 476,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 477,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 478,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 479,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 480,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 481,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 482,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 483,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 484,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 485,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 486,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 487,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 488,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 489,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 490,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 490,
+      "rule": "empty_answer",
+      "action": "dropped",
+      "before": {
+        "q": "Какая компетентная модель выпускника?",
+        "a": "Компетентная модель выпускника не представлена в данном контексте"
+      },
+      "after": null,
+      "detail": ""
+    },
+    {
+      "faq_id": 491,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 492,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 493,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 494,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 583,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 584,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 586,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 587,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 588,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 589,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 590,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 595,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer"
+    },
+    {
+      "faq_id": 618,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 619,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 620,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 621,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 622,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 623,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 624,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 625,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 626,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 627,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 628,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 629,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 630,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 651,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 652,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 653,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 654,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 655,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 656,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 657,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 658,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 659,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 660,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 661,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 662,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 663,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 664,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 665,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 666,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 667,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 668,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 669,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 670,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 671,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 672,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 673,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 674,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 675,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 676,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 677,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 678,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 679,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 680,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 681,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 682,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 683,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 684,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 685,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "class"
+    },
+    {
+      "faq_id": 686,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 687,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 688,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 689,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 700,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 701,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 702,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 703,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 704,
+      "rule": "whitespace_quotes",
+      "action": "fixed",
+      "before": null,
+      "after": null,
+      "detail": "answer, class"
+    },
+    {
+      "faq_id": 7,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=1"
+    },
+    {
+      "faq_id": 284,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=274"
+    },
+    {
+      "faq_id": 285,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=275"
+    },
+    {
+      "faq_id": 286,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=276"
+    },
+    {
+      "faq_id": 287,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=277"
+    },
+    {
+      "faq_id": 288,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=278"
+    },
+    {
+      "faq_id": 289,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=279"
+    },
+    {
+      "faq_id": 290,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=280"
+    },
+    {
+      "faq_id": 291,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=281"
+    },
+    {
+      "faq_id": 292,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=282"
+    },
+    {
+      "faq_id": 293,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=283"
+    },
+    {
+      "faq_id": 294,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=274"
+    },
+    {
+      "faq_id": 295,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=275"
+    },
+    {
+      "faq_id": 302,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=296"
+    },
+    {
+      "faq_id": 303,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=297"
+    },
+    {
+      "faq_id": 304,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=298"
+    },
+    {
+      "faq_id": 305,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=299"
+    },
+    {
+      "faq_id": 321,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=296"
+    },
+    {
+      "faq_id": 322,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=297"
+    },
+    {
+      "faq_id": 323,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=298"
+    },
+    {
+      "faq_id": 324,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=299"
+    },
+    {
+      "faq_id": 325,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=300"
+    },
+    {
+      "faq_id": 326,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=301"
+    },
+    {
+      "faq_id": 327,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=306"
+    },
+    {
+      "faq_id": 333,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=314"
+    },
+    {
+      "faq_id": 334,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=315"
+    },
+    {
+      "faq_id": 335,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=316"
+    },
+    {
+      "faq_id": 336,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=317"
+    },
+    {
+      "faq_id": 337,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=318"
+    },
+    {
+      "faq_id": 338,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=319"
+    },
+    {
+      "faq_id": 343,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=320"
+    },
+    {
+      "faq_id": 349,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=15"
+    },
+    {
+      "faq_id": 350,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=16"
+    },
+    {
+      "faq_id": 351,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=17"
+    },
+    {
+      "faq_id": 354,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=19"
+    },
+    {
+      "faq_id": 355,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=20"
+    },
+    {
+      "faq_id": 366,
+      "rule": "duplicate_pair",
+      "action": "dropped",
+      "before": null,
+      "after": null,
+      "detail": "дубль faq_id=17"
+    },
+    {
+      "faq_id": 662,
+      "rule": "topic_harmonized",
+      "action": "fixed",
+      "before": "scores_grants",
+      "after": "admission",
+      "detail": ""
+    },
+    {
+      "faq_id": 684,
+      "rule": "topic_harmonized",
+      "action": "fixed",
+      "before": "programs",
+      "after": "student_life",
+      "detail": ""
+    }
+  ]
+}

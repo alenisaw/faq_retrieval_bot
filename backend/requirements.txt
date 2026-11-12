@@ -10,7 +10,7 @@ scipy==1.18.1
 nltk==3.10.4                      # punkt_tab и stopwords скачиваются при первом запуске
 pymorphy3==2.0.6
 pymorphy3-dicts-ru==2.4.417150.4580142
-spacy==3.8.18                     # только для сравнения лемматизаторов
+spacy==3.8.18                     # сравнение лемматизаторов + NER (ORG, LOC) в entities.py
 ru_core_news_sm @ https://github.com/explosion/spacy-models/releases/download/ru_core_news_sm-3.8.0/ru_core_news_sm-3.8.0-py3-none-any.whl
 
 # --- поиск и модели (AI-модуль) ---
@@ -25,9 +25,14 @@ huggingface_hub==2.4.0
 torch>=2.2
 joblib==1.6.0
 
+# --- веб-API (бэкенд) ---
+fastapi==0.162.5
+uvicorn==0.54.0
+
 # --- оценка и графики ---
 matplotlib==3.11.2
 psutil==7.2.2
 
 # --- тесты ---
 pytest==9.2.0
+httpx==0.28.1                     # для fastapi.testclient

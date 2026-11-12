@@ -7,6 +7,7 @@
 
 from __future__ import annotations
 
+import os
 from pathlib import Path
 
 # --- Пути ---------------------------------------------------------------
@@ -20,8 +21,16 @@ CACHE_DIR = PROCESSED_DIR / "cache"          # кэш эмбеддингов (в
 MODELS_DIR = BACKEND_DIR / "models"          # joblib-модели (в .gitignore)
 
 RAW_CSV_PATH = RAW_DIR / "QA_addmissionAitu.csv"
+RAW_PARQUET_PATH = RAW_DIR / "faq_raw.parquet"           # тот же CSV без изменений, в parquet
 FAQ_CLEAN_PATH = PROCESSED_DIR / "faq_clean.parquet"
 DB_PATH = PROCESSED_DIR / "faq.db"
+CLEANING_LOG_PATH = PROCESSED_DIR / "cleaning_log.json"  # что и почему удалено/исправлено
+TOPIC_REVIEW_PATH = PROCESSED_DIR / "topic_review.csv"   # для ручной проверки словаря тем
+CLUSTER_REVIEW_PATH = PROCESSED_DIR / "cluster_review.csv"
+
+SQL_DIR = BACKEND_DIR / "sql"
+SCHEMA_SQL_PATH = SQL_DIR / "schema.sql"
+QUERIES_SQL_PATH = SQL_DIR / "queries.sql"
 
 EVAL_DIR = BACKEND_DIR / "eval"
 TEST_QUERIES_PATH = EVAL_DIR / "test_queries.csv"
@@ -56,6 +65,13 @@ TOPICS: dict[str, str] = {
     "contacts": "Контакты и график работы",
     "student_life": "Студенческая жизнь и карьера",
 }
+
+# --- API -----------------------------------------------------------------
+# Откуда фронтенд может ходить в API (CORS). Через запятую в переменной окружения.
+API_CORS_ORIGINS = [o.strip() for o in os.environ.get(
+    "API_CORS_ORIGINS", "http://localhost:3000,http://127.0.0.1:3000").split(",") if o.strip()]
+# Методы, которые API строит при старте (остальные — лениво, при первом запросе).
+API_WARMUP_METHODS = [m.strip() for m in os.environ.get("API_WARMUP_METHODS", "").split(",") if m.strip()]
 
 # --- Чат-бот -----------------------------------------------------------
 # Ответ при отказе (score топ-1 ниже порога). Контакты взяты из самого FAQ.

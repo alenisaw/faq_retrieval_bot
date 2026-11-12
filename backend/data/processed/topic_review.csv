@@ -1,0 +1,536 @@
+faq_id,topic,topic_source,question,orig_class
+0,about,question:about,Что такое Astana IT University (AITU / аиту)?,AITU_overview
+1,admission,question:admission,Как поступить в Astana IT University (AITU / аиту)?,AITU_admission_process
+2,admission,question:entrance_exam,Что входит в вступительный экзамен АЕТ при поступлении в Astana IT University (AITU / аиту)?,AITU_admission_test
+3,admission,question:admission,Каковы требования для поступления в AITU?,Admission_requirements
+4,admission,question:admission,Какие документы нужны для поступления в AITU?,Required_documents
+5,admission,question:admission,Какие сроки подачи заявлений в AITU?,Submission_deadlines
+10,admission,question:admission,Как поступить на платное отделение Astana IT University (AITU / аиту)?,AITU_paid_admission
+14,study_process,question:study_format,Сколько лет учатся в AITU (аиту) на бакалавриате?,AITU_bachelors_duration
+15,tuition,question:tuition,Какова стоимость обучения у вас в университете?,AITU_tuition_fees
+16,dormitory,question:dormitory,Есть ли у вас общежитие?,AITU_dormitory
+17,study_process,question:study_format,На каком языке проводится обучение?,AITU_instruction_language
+18,military,question:military,Есть ли в университете военная кафедра?,AITU_military_department
+19,scores_grants,question:scores_grants,Можно ли поступить в университет с баллами MESC?,AITU_MESC_scores_admission
+20,scores_grants,question:scores_grants,Можно ли поступить в университет с баллами SAT?,AITU_SAT_scores_admission
+21,scores_grants,question:scores_grants,Какой пороговый балл для поступления на грант?,AITU_grant_threshold
+22,contacts,question:contacts,Где находится Astana IT University AITU (аиту)?,AITU_location
+23,contacts,question:contacts,Контакты AITU (аиту)?,AITU_contact_details
+24,contacts,question:contacts,График работы?,AITU_working_hours
+25,creative_exam,override,Как поступить на Digital Journalism?,AITU_Digital_Journalism_admission
+26,creative_exam,question:creative_exam,Когда можно сдать творческий экзамен?,AITU_creative_exam_dates
+27,creative_exam,question:creative_exam,На каком языке будет проходить творческий экзамен?,AITU_creative_exam_language
+28,study_process,question:study_format,На каком языке будет проходить обучение Digital Journalism (DJ) Цифровая журналистика?,AITU_Digital_Journalism_education_language
+29,creative_exam,question:creative_exam,Как проходит творческий экзамен?,AITU_creative_exam_process
+30,creative_exam,question:creative_exam,"В каком жанре, стиле нужно писать сочинение?",AITU_creative_exam_essay_style
+31,creative_exam,question:creative_exam,Какие темы сочинения?,AITU_creative_exam_essay_topics
+32,creative_exam,question:creative_exam,На какие темы нужно делать творческий проект?,AITU_creative_exam_project_topics
+33,creative_exam,question:creative_exam,Как зарегистрироваться на творческий экзамен?,AITU_creative_exam_registration
+34,contacts,question:contacts,Где можно проконсультироваться со студентами?,AITU_student_consultation
+35,about,question:about,Можно ли посмотреть как выглядит университет?,AITU_3D_tour
+43,programs,question:programs_list,Какие специальности входят в Информационные технологии?,AITU_IT_specializations
+78,scores_grants,question:scores_grants,Какой проходной балл необходим для поступления на бакалавриат по специальности Computer Science в Astana IT University?,AITU_computer_science_requirements
+79,scores_grants,question:scores_grants,Какой пороговый балл на бакалавриат по специальности Computer Science в Astana IT University?,AITU_computer_science_cutoff
+80,scores_grants,question:scores_grants,Каковы минимальные баллы для поступления на программу Computer Science в Astana IT University?,AITU_computer_science_min_score
+81,scores_grants,question:scores_grants,Каковы требования по баллам для поступления на специальность Computer Science в Astana IT University?,AITU_computer_science_score_requirements
+82,scores_grants,question:scores_grants,Каков проходной балл на специальность Software Engineering в Astana IT University?,AITU_software_engineering_min_score
+83,scores_grants,question:scores_grants,Какой проходной балл на специальность Information Security в Astana IT University?,AITU_information_security_min_score
+84,scores_grants,question:scores_grants,Какие предметы нужно сдавать при ЕНТ для поступления на специальность Software Engineering в Astana IT University?,AITU_software_engineering_subjects
+85,scores_grants,question:scores_grants,Какие профильные предметы необходимо выбрать для поступления на специальность Information Security в Astana IT University при сдаче ЕНТ?,AITU_information_security_subjects
+86,scores_grants,question:scores_grants,На какие профильные предметы следует обратить внимание при сдаче ЕНТ для поступления на специальность Electrical Engineering and Automation в Astana IT University?,AITU_electrical_engineering_subjects
+87,scores_grants,question:scores_grants,Какие предметы нужны для Software Engineering?,AITU_software_engineering_subjects
+88,scores_grants,question:scores_grants,Предметы для Information Security?,AITU_information_security_subjects
+89,scores_grants,question:scores_grants,Нужные предметы для Communications and Communication Technologies?,AITU_communications_subjects
+90,scores_grants,question:scores_grants,Что сдавать для Electrical Engineering and Automation?,AITU_electrical_engineering_subjects
+91,scores_grants,question:scores_grants,Какие предметы для Management and Control?,AITU_management_subjects
+92,scores_grants,question:scores_grants,Проходной балл для Computer Science?,AITU_computer_science_score
+93,scores_grants,question:scores_grants,Каков минимальный балл для Software Engineering?,AITU_software_engineering_score
+94,scores_grants,question:scores_grants,Сколько нужно баллов для Information Security?,AITU_information_security_score
+95,scores_grants,question:scores_grants,Проходной балл для Communications and Communication Technologies?,AITU_communications_score
+96,scores_grants,question:scores_grants,Какой балл нужен для Management and Control?,AITU_management_score
+97,scores_grants,question:scores_grants,Каков минимальный балл для специальности Big Data Analysis?,AITU_big_data_analysis_score
+98,scores_grants,question:scores_grants,Проходной балл для специальности Media Technologies?,AITU_media_technologies_score
+99,scores_grants,question:scores_grants,Сколько баллов нужно для специальности Mathematical & Computational Science?,AITU_math_comp_science_score
+100,scores_grants,question:scores_grants,Каков проходной балл для специальности Electrical Engineering and Automation?,AITU_electrical_engineering_score
+101,scores_grants,question:scores_grants,Каков минимальный балл для поступления на программу по Информационной безопасности?,AITU_infosec_score
+102,scores_grants,question:scores_grants,Какой минимальный балл нужен для специальности Коммуникации и коммуникационные технологии?,AITU_communications_score
+103,scores_grants,question:scores_grants,Сколько баллов необходимо набрать для поступления на специальность Менеджмент и управление?,AITU_management_score
+104,scores_grants,question:scores_grants,Какой минимальный балл нужен для специальности Software Engineering?,AITU_software_engineering_score
+105,scores_grants,question:scores_grants,Сколько баллов нужно набрать для поступления на специальность Computer Science?,AITU_computer_science_score
+106,scores_grants,question:scores_grants,Какие предметы нужно выбрать для поступления на программу по Информационным технологиям?,AITU_IT_subjects
+107,scores_grants,question:scores_grants,Какие предметы следует сдавать для специальности Информационная безопасность?,AITU_infosec_subjects
+108,scores_grants,question:scores_grants,Какие профильные предметы необходимо сдавать для поступления на специальность Коммуникации и коммуникационные технологии?,AITU_communications_subjects
+109,scores_grants,question:scores_grants,"Какие предметы стоит выбрать для сдачи ЕНТ, если я хочу поступить на программу по Менеджменту и управлению?",AITU_management_subjects
+110,scores_grants,question:scores_grants,"Какие предметы я должен выбрать для сдачи ЕНТ, если моя цель - программа по Электротехнике и автоматике?",AITU_electrical_engineering_subjects
+111,scores_grants,question:scores_grants,Какие предметы для Информационной безопасности?,AITU_infosec_subjects
+112,scores_grants,question:scores_grants,ЕНТ предметы для Коммуникаций?,AITU_communications_subjects
+113,scores_grants,question:scores_grants,Профильные предметы для Менеджмента?,AITU_management_subjects
+114,scores_grants,question:scores_grants,Что сдавать для Электротехники?,AITU_electrical_engineering_subjects
+115,scores_grants,question:scores_grants,Предметы ЕНТ для IT?,AITU_IT_subjects
+133,programs,question:programs,Кем можно стать окончив Software Engineering (Программная инженерия)?,AITU_software_engineering_careers
+134,programs,question:programs,Кем можно стать окончив Computer Science (Компьютерные науки)?,AITU_computer_science_careers
+135,programs,question:programs,Кем можно стать окончив Big Data Analysis (Анализ больших данных)?,AITU_big_data_analysis_careers
+136,programs,question:programs,Кем можно стать окончив Media Technologies (Медиа технологии)?,AITU_media_technologies_careers
+137,programs,question:programs,Кем можно стать окончив Mathematical & Computational Science (Математические и вычислительные науки)?,AITU_math_comp_science_careers
+138,programs,question:programs,Кем можно стать окончив Cybersecurity (Кибербезопасность)?,AITU_cybersecurity_careers
+139,programs,question:programs,Кем можно стать окончив Smart Technologies?,AITU_smart_technologies_careers
+140,programs,question:programs,Кем можно стать окончив Industrial Internet of Things (Промышленный интернет вещей)?,AITU_IIOT_careers
+141,programs,question:programs,Кем можно стать окончив IT Management (IT менеджмент)?,AITU_IT_management_careers
+142,programs,question:programs,Кем можно стать окончив IT Entrepreneurship (IT предпринимательство)?,AITU_IT_entrepreneurship_careers
+143,programs,question:programs,Кем можно стать окончив Digital Journalism (Цифровая журналистика)?,AITU_digital_journalism_careers
+144,programs,question:programs,Что учат на Software Engineering (Программная инженерия)?,AITU_software_engineering_training
+145,programs,question:programs,Что умеет обучающийся после обучения на Software Engineering (Программная инженерия)?,AITU_software_engineering_skills
+146,programs,question:programs,Какой план обучения на Software Engineering (Программная инженерия)?,AITU_software_engineering_curriculum_structure
+147,programs,question:programs,Что проходят на Software Engineering (Программная инженерия)?,AITU_software_engineering_course_content
+148,programs,question:programs,Какой план обучения на Computer Science (Компьютерные науки)?,AITU_computer_science_curriculum_structure
+149,programs,question:programs,Что проходят на Computer Science (Компьютерные науки)?,AITU_computer_science_course_content
+150,programs,question:programs,Какой план обучения на Big Data Analysis (Анализ больших данных)?,AITU_big_data_analysis_curriculum_structure
+151,programs,question:programs,Что проходят на Big Data Analysis (Анализ больших данных)?,AITU_big_data_analysis_course_content
+152,programs,question:programs,Какой план обучения на Media Technologies (Медиа технологии)?,AITU_media_technologies_curriculum_structure
+153,programs,question:programs,Что проходят на Media Technologies (Медиа технологии)?,AITU_media_technologies_course_content
+154,programs,question:programs,Какой план обучения на Mathematical & Computational Science (Математические и вычислительные науки)?,AITU_math_computational_science_curriculum_structure
+155,programs,question:programs,Что проходят на Mathematical & Computational Science (Математические и вычислительные науки)?,AITU_math_computational_science_course_content
+156,programs,question:programs,Какой план обучения на Cybersecurity (Кибербезопасность)?,AITU_cybersecurity_curriculum_structure
+157,programs,question:programs,Что проходят на Cybersecurity (Кибербезопасность)?,AITU_cybersecurity_course_content
+158,programs,question:general_it,Какой язык программирования наиболее популярен?,Programming
+159,programs,question:general_it,Что такое Интернет вещей (IoT)?,Technology
+160,programs,question:general_it,Какие основные принципы криптографии?,Security
+161,programs,question:general_it,Что такое машинное обучение?,AI
+162,programs,question:general_it,Какие виды умных технологий существуют?,Technology
+177,programs,question:programs,Какой план обучения на Smart Technologies?,AITU_cybersecurity_course_content
+178,programs,question:programs,Что проходят на Smart Technologies?,AITU_bigdata_curriculum_structure
+179,programs,question:programs,Что проходят на Industrial Internet of Things?,AITU_cybersecurity_course_content
+180,programs,question:programs,Какой план обучения на IT Management (IT менеджмент)? Что проходят на IT Management (IT менеджмент)?,IT Managament
+208,masters,question:masters,Сколько лет проходит магистратура в Astana IT University?,Duration
+209,masters,question:masters,На каком языке проходит обучение на магистратуре в Astana IT University?,Language
+210,masters,question:masters,Какие образовательные программы есть на магистратуре в Astana IT University?,Programs
+211,masters,question:masters,Какие документы нужно/необходимо собрать для поступления на магистратуру?,Documents
+212,tuition,question:tuition,Как можно получить скидку на обучение магистратуры?,Discounts
+213,scores_grants,question:scores_grants,что такое AITU ICode?,AITU ICode
+214,admission,question:college_foundation,Как поступить в колледж АИТУ (ASTANA IT COLLEGE)?,Колледж АИТУ
+215,admission,question:college_foundation,Какие специальности есть в колледже ASTANA IT COLLEGE/ Какие образовательные программы ОП есть в колледже ASTANA IT COLLEGE?,Колледж АИТУ
+216,creative_exam,question:creative_exam,До какого числа проходит прием заявлений на творческий экзамен?,Прием заявлений на творческий экзамен
+217,scores_grants,question:scores_grants,До какого числа проходит прием заявлений для участия в конкурсе государственных грантов?,Конкурс государственных грантов
+218,admission,question:admission,Когда начинает работать/открывается приемная комиссия Astana IT University?,Открытие приемной комиссии
+219,admission,question:admission,До какого числа работает приемная комиссия? Когда закрывается приемная комиссия?,Закрытие приемной комиссии
+220,contacts,question:contacts,Где кабинет 1с?,Кабинет 1С
+221,scores_grants,question:scores_grants,Что нужно сдать чтобы поступить в АИТУ?,Сдача ЕНТ и АЕТ для поступления
+222,admission,question:entrance_exam,Сколько времени дают на АЕТ?,Время на сдачу АЕТ
+223,study_process,question:student_certificate,Сколько дней университет делает справку с места учебы?,Сроки выдачи справки с места учебы
+226,scores_grants,question:scores_grants,Что дает олимпиада AITU IQyn в случае выигрыша?/ что если победить олимпиаду Айкын?,Преимущества победы в олимпиаде AITU IQyn
+227,scores_grants,question:scores_grants,2 этап IQyn оффлайн будет?,Формат второго этапа олимпиады IQyn в 2023 году
+228,dormitory,question:dormitory,Сколько стоит проживание в общежитии?,Стоимость проживания в общежитии АИТУ
+229,study_process,question:study_format,Учеба когда заканчивается?,Учебный год
+230,tuition,question:tuition,"Если учась на ректорском гранте, и если будешь активистом, учиться отлично и тд, то возможно будет получать стипендию",Стипендии
+231,study_process,question:grading,"Если закрыть сессию по предмету на 60%, но при этом все задания за триместр были сделаны на 100, как расчет идет, формула расчета?",Успеваемость
+232,admission,question:entrance_exam,"aitu icode, aitu iqyn, aet что для чего и зачем?",Вступительные экзамены
+233,admission,question:entrance_exam,Когда выйдут результаты АЕТ?,Вступительные экзамены
+234,study_process,question:student_certificate,Где делать документ что ты реально студент?,Студенческие документы
+235,admission,question:entrance_exam,Есть пробники по АЕТ?,Вступительные экзамены
+236,tuition,question:tuition,Есть ли вероятность получения стипендии при учебе на ректорском гранте и активности в университете?,Финансирование
+237,study_process,question:grading,"Как производится расчет оценки за предмет, если закрыть сессию на 60%, но все задания были выполнены на 100%?",Успеваемость
+238,scores_grants,question:scores_grants,Что такое AITU iCode и для чего проводится эта олимпиада?,Олимпиады
+239,scores_grants,question:scores_grants,Какую цель преследует олимпиада AITU iQyn и что позволяет получить ее победа?,Олимпиады
+240,admission,question:entrance_exam,Что такое АЕТ и зачем он нужен абитуриентам?,Вступительные экзамены
+241,admission,question:entrance_exam,"Когда выходят результаты АЕТ и где можно узнать, прошел ли абитуриент экзамен?",Вступительные экзамены
+242,study_process,question:student_certificate,Как можно подтвердить свой статус студента и где получить соответствующий документ?,Студенческие документы
+243,admission,question:entrance_exam,Есть ли пробники по АЕТ и как можно подготовиться к экзамену?,Вступительные экзамены
+244,scores_grants,question:scores_grants,Какие предметы нужно сдать чтоб поступить на Software Engineering Программная инженерия?,Software Engineering
+245,programs,question:programs,Какой код у Software Engineering (Программная инженерия)?,Software Engineering
+246,programs,question:programs,Какой код у Big Data Analysis (Анализ больших данных)?,Big Data Analysis
+247,programs,question:programs,Какой код у Computer Science (Компьютерные науки)?,Computer Science
+248,programs,question:programs,Какой код у Media Technologies (Медиа технологии)?,Media Technologies
+249,programs,question:programs,Какой код у Mathematical & Computational Science (Математические и вычислительные науки)?,Mathematical & Computational Science
+250,programs,question:programs,Какой код у Cybersecurity (Кибербезопасность)?,Cybersecurity
+251,programs,question:programs,Какой код у Smart Technologies (Умные технологии)?,Smart Technologies
+252,programs,question:programs,Какой код у Industrial Internet of Things (Промышленный интернет вещей)?,Industrial Internet of Things
+253,programs,question:programs,Какой код у IT Management (IT менеджмент)?,IT Management
+254,programs,question:programs,Какой код у IT Entrepreneurship (IT предпринимательство)?,IT Entrepreneurship
+255,programs,question:programs,Какой код у Digital Journalism (Цифровая журналистика)?,Digital Journalism
+256,programs,question:programs,Software Engineering к какой гоп относится?,Software Engineering
+257,programs,question:programs,computer science к какой гоп относится?,Computer Science
+258,scores_grants,question:scores_grants,Какие предметы нужно сдать чтоб поступить на computer science?,Computer Science
+259,scores_grants,question:scores_grants,Какие предметы нужно сдать чтоб поступить на Big Data Analysis (Анализ больших данных)?,Big Data Analysis
+260,scores_grants,question:scores_grants,Какие предметы нужно сдать чтоб поступить на Media Technologies (Медиа технологии)?,Media Technologies
+261,scores_grants,question:scores_grants,Какие предметы нужно сдать чтоб поступить на Mathematical & Computational Science Математические и вычислительные науки?,Mathematical & Computational Science
+262,scores_grants,question:scores_grants,Какие предметы нужно сдать чтоб поступить на Cybersecurity (Кибербезопасность)?,Cybersecurity
+263,scores_grants,question:scores_grants,Какие предметы нужно сдать чтоб поступить на Smart Technologies (Умные технологии)?,Smart Technologies
+264,scores_grants,question:scores_grants,Какие предметы нужно сдать чтоб поступить на Industrial Internet of Things (Промышленный интернет вещей)?,Industrial Internet of Things
+265,scores_grants,question:scores_grants,Какие предметы нужно сдать чтоб поступить на IT Management (IT менеджмент)?,IT Management
+266,scores_grants,question:scores_grants,Какие предметы нужно сдать чтоб поступить на Digital Journalism (Цифровая журналистика)?,Digital Journalism
+267,scores_grants,question:scores_grants,Какие предметы нужно сдать чтоб поступить на IT Entrepreneurship (IT предпринимательство)?,IT Entrepreneurship
+268,admission,question:entrance_exam,Можно ли поступить по ЕНТ в AITU без сдачи АЕТ?,Admission
+269,contacts,question:contacts,Университет до скольки открыт?,Working Hours
+270,admission,question:entrance_exam,"Можно ли без ЕНТ поступить в АИТУ, но по АЕТ?",Admission
+271,scores_grants,question:scores_grants,Куда я могу подать с физмат комбинацией на ЕНТ?,Specialties
+272,tuition,question:tuition,Сколько курсы по английскому стоят?,Language Courses
+273,masters,question:masters,Какие документы необходимо предоставить для поступления в магистратуру?,Admission
+274,tuition,question:tuition,"Какие виды скидок предоставляются магистрантам, зачисленным на 1 курс на платной основе?",Scholarships
+275,masters,question:masters,Какие профильные предметы включает образовательная программа магистратуры 'Applied Data Analytics'?,Master's Programs
+276,masters,question:masters,Какие профильные предметы представлены в образовательной программе магистратуры 'Computational Sciences'?,Master's Programs
+277,masters,question:masters,Какие профильные предметы охватывает образовательная программа магистратуры 'Computer Science and Engineering'?,Master's Programs
+278,masters,question:masters,Какие профильные предметы доступны в образовательной программе магистратуры 'Media Technologies'?,Master's Programs
+279,masters,question:masters,Какие профильные предметы представлены в образовательной программе магистратуры 'Project Management'?,Master's Programs
+280,masters,question:masters,Какие профильные предметы охватывает образовательная программа магистратуры 'Digital Public Administration and Services'?,Master's Programs
+281,admission,question:entrance_exam,Какие условия необходимо выполнить для успешной сдачи комплексного тестирования?,Admission
+282,admission,question:admission,Какие документы необходимо собрать для поступления на платное отделение?,Admission
+283,tuition,question:tuition,Когда и как производится оплата за обучение на платном отделении?,Payment
+296,masters,question:masters,Каковы основные предметы образовательной программы магистратуры по направлению 'Компьютерные науки и инженерия'?,"компьютерные науки и инженерия, алгоритмы, программирование, компьютерная архитектура, облачные вычисления, artificial intelligence"
+297,masters,question:masters,Какие предметы включает образовательная программа магистратуры по направлению 'Цифровые государственное управление и услуги'?,"цифровое государственное управление, информационные технологии, кибербезопасность"
+298,masters,question:masters,Какова основная специализация образовательной программы магистратуры по направлению Управление проектами?,"управление проектами, планирование, риск-менеджмент, лидерство"
+299,masters,question:masters,Каковы профильные предметы образовательной программы магистратуры по направлению 'Медиа технологии'?,"медиа технологии, графический дизайн, веб-приложения"
+300,study_process,question:study_format,Каков срок обучения в Astana IT University (AITU)?,"срок обучения, магистратура"
+301,study_process,question:study_format,Какова длительность учебного года в AITU?,длительность учебного года
+306,study_process,question:grading,Какова продолжительность одного триместра в AITU?,Продолжительность одного триместра
+314,study_process,question:study_format,Какие языки обучения предлагаются для бакалавриата в Astana IT University?,"Языки обучения, английский"
+315,student_life,question:career_activities,Какие возможности предоставляет университет для студенческой жизни и участия в стартап-сообществе?,"Студенческая жизнь, стартап-сообщество, предпринимательская деятельность"
+316,programs,question:programs_list,Какие образовательные программы предлагает Astana IT University для бакалавриата?,"Образовательные программы, бакалавриат, информация"
+317,masters,question:masters,Какая образовательная программа предлагается в докторантуре с кодом 8D06101?,"Образовательная программа, докторантура, Компьютерные науки"
+318,masters,question:masters,Какая образовательная программа предлагается в докторантуре с кодом 8D04102?,"Образовательная программа, докторантура, Управление проектами"
+319,masters,question:masters,Какая цель образовательной программы Компьютерные науки (код 8D06101) в докторантуре?,"Цель образовательной программы, Компьютерные науки, докторантура, PhD"
+320,masters,question:masters,Какие задачи ставят перед образовательной программой Компьютерные науки в докторантуре?,"Задачи образовательной программы, Компьютерные науки, докторантура"
+328,study_process,question:grading,Какова продолжительность академического занятия в AITU?,"Admission Requirements, Время обучения, Административные вопросы"
+329,about,question:research,Какая цель департамента науки и инноваций в Astana IT University?,"Campus Life, Инновации, Университетская жизнь"
+330,about,question:research,Какие научно-инновационные центры открыты в Astana IT University?,"Campus Life, Инновации, Научно-инновационные центры"
+331,about,question:research,Какой научно-исследовательский журнал выпускается на базе Astana IT University?,"Campus Life, Научный журнал, Научные публикации, Инновации"
+332,admission,question:admission,Каковы шаги для поступления на бакалавриат в Astana IT University?,"Admission Requirements, Поступление на бакалавриат, Бакалавриат"
+339,masters,question:masters,Какие результаты обучения предполагаются после успешного завершения образовательной программы Компьютерные науки в докторантуре?,"Program Information, Программы, Докторантура, Компьютерные науки"
+340,dormitory,question:dormitory,Какие типы жилых помещений предоставляет университет своим студентам?,"Campus Life, Жилье, Условия проживания, Общежитие"
+341,dormitory,question:dormitory,Какие условия проживания предоставляются студентам в общежитии университета?,"Campus Life, Жилье, Условия проживания, Общежитие"
+342,dormitory,question:dormitory,Какие категории студентов имеют приоритет при распределении мест в общежитии?,"Campus Life, Жилье, Условия проживания, Общежитие"
+344,dormitory,question:dormitory,Как студенты могут подать заявление на предоставление места в общежитии?,Admission Requirements
+345,dormitory,question:dormitory,"Что необходимо сделать студентам, которым предоставлено место в общежитии, чтобы заключить договор на проживание?",Application Process
+346,dormitory,question:dormitory,Какие способы оплаты предусмотрены для оплаты за проживание в общежитии?,Financial Aid
+347,dormitory,question:dormitory,Какие условия обеспечиваются для комфорта проживания студентов в общежитии?,"Campus Life, Студенческая жизнь"
+348,study_process,question:study_format,Срок обучения в AITU?,"Program Information, Информация о программе обучения"
+352,military,question:military,Есть ли в университете военная кафедра?,"Program Information, Информация о программе обучения"
+353,scores_grants,question:scores_grants,Какой пороговый балл для поступления на грант?,"Admission Requirements, Требования для поступления"
+356,tuition,question:tuition,Какие виды скидок предоставляются обучающимся на платной основе в бакалавриате на первом курсе?,"Financial Aid, Финансовая помощь"
+357,programs,question:programs,"Каковы основные образовательные программы, предлагаемые университетом?","Academic Programs, Академические программы"
+358,student_life,question:career_activities,Какие возможности для стажировок и практик предоставляет университет?,"Internship and Practice Opportunities, Возможности для стажировок и практик"
+359,about,question:about,Какова репутация университета на рынке труда?,"Employment Prospects, Перспективы трудоустройства"
+360,student_life,question:career_activities,Какие мероприятия и клубы существуют для студентов в университете?,"Campus Life, Студенческая жизнь"
+361,student_life,question:mobility_partners,Каковы перспективы для международных студентов в университете?,"International Students, Международные студенты"
+362,tuition,question:tuition,Какие скидки присваиваются обучающимся один раз в первом академическом периоде и действуют весь период обучения?,"Financial Aid, Финансовая помощь"
+363,tuition,question:tuition,"Какие скидки действуют на протяжении всего периода обучения, без ограничения по академическому периоду?","Financial Aid, Финансовая помощь"
+364,tuition,question:tuition,Какие условия позволяют обучающимся претендовать на получение скидки в размере 30% на протяжении всего периода обучения?,"Financial Aid, Финансовая помощь"
+367,military,question:military,Есть ли в университете военная кафедра?,"Военная кафедра, Military Department"
+370,admission,question:entrance_exam,Когда будет проведен AITU Excellence Test в регионах?,"AITU Excellence Test, Экзамен AITU Excellence Test"
+371,admission,question:entrance_exam,Когда будет проведен AITU Excellence Test в Астане?,"AITU Excellence Test, Экзамен AITU Excellence Test"
+372,tuition,question:tuition,Какие виды скидок предоставляются обучающимся на платной основе в бакалавриате на первом курсе?,"Financial Aid, Типы скидок на бакалавриате"
+373,tuition,question:tuition,"Какие скидки действуют на протяжении всего периода обучения, без ограничения по академическому периоду?","Financial Aid, Скидки на всё обучение"
+374,tuition,question:tuition,"Какие скидки могут быть пересмотрены один раз в учебном году и что происходит с обучающимися, не соответствующими критериям?","Financial Aid, Пересмотр скидок и их лишение"
+375,tuition,question:tuition,Как долго действуют скидки для магистрантов на программе послевузовского образования при условии успешной сдачи экзаменационных сессий?,"Financial Aid, Скидки для магистрантов"
+376,tuition,question:tuition,"Какой размер скидки предоставляется обладателям диплома предыдущего уровня образования с GPA 3,6 или выше?","Financial Aid, Скидка для обладателей диплома с высоким GPA"
+377,tuition,question:tuition,Кто имеет право на скидку в размере 30%?,"Financial Aid, Скидка для обладателей диплома с отличием"
+378,tuition,question:tuition,Какие условия необходимы для получения скидки в размере 20% выпускникам Университета?,"Financial Aid, Скидка для выпускников Университета"
+379,tuition,question:tuition,Какие документы необходимо предоставить для получения скидки на бакалавриате?,"Financial Aid, Документы для скидки на бакалавриате"
+380,tuition,question:tuition,Какие критерии участия в Республиканской олимпиаде и конкурсе научных проектов для получения скидки?,"Financial Aid, Участие в олимпиаде и конкурсе научных проектов"
+381,tuition,question:tuition,Как долго будут действовать скидки для магистрантов на программе послевузовского образования?,"Financial Aid, Длительность скидок для магистрантов"
+382,tuition,question:tuition,"Что произойдет, если обучающийся не соответствует критериям для скидки?","Financial Aid, Последствия невыполнения критериев для скидки"
+383,tuition,question:tuition,Какие дополнительные скидки предоставляются для выпускников Университета?,"Financial Aid, Скидки для выпускников Университета"
+384,contacts,question:contacts,"Что делать, если у меня возникли вопросы о программе бакалавриата в Astana IT University (AITU)?","Контакты, Образовательные программы"
+385,programs,question:programs,Какие предметы входят в программу бакалавриата по компьютерным наукам в AITU?,"Образовательные программы, Бакалавриат по компьютерным наукам"
+386,student_life,question:career_activities,Какие возможности стажировки предоставляет Astana IT University (AITU) для студентов?,"Стажировки, Сотрудничество с компаниями"
+387,masters,question:masters,Какая длительность программы магистратуры в Astana IT University (AITU)?,"Образовательные программы, Магистратура"
+388,admission,question:admission,Каковы языковые требования для поступления в AITU?,Языковые требования
+389,student_life,question:career_activities,Какие дополнительные активности предоставляет AITU для студентов?,"Студенческая жизнь, Клубы и мероприятия"
+390,student_life,question:career_activities,Каковы перспективы трудоустройства для выпускников AITU?,"Трудоустройство, Карьерные перспективы"
+391,programs,question:programs_list,Какие программы бакалавриата предлагает Astana IT University (AITU / аиту)?,"Образовательные программы, Бакалавриат"
+392,masters,question:masters,Какие программы магистратуры доступны в Astana IT University (AITU / аиту)?,"Образовательные программы, Магистратура"
+393,admission,question:entrance_exam,Что такое AITU Excellence Test и для чего он нужен?,AITU Excellence Test
+394,about,question:research,Какие научные исследования проводятся в Astana IT University (AITU / аиту)?,"Научные исследования, Инновационные проекты"
+395,student_life,question:mobility_partners,Какие возможности для международного обмена предоставляет Astana IT University (AITU / аиту)?,"Международный обмен, Международное сотрудничество"
+396,tuition,question:tuition,Какая стипендия предоставляется студентам AITU?,"Студенческие стипендии, Академические достижения"
+397,contacts,question:contacts,Где находится Astana IT University (AITU / аиту)?,Местоположение
+398,programs,question:programs,Какие программы предлагает Astana IT University (AITU / аиту)?,Образовательные программы
+399,about,question:about,Какие преимущества учебы в Astana IT University (AITU / аиту)?,Преимущества учебы
+400,about,question:research,Какие исследовательские проекты проводятся в Astana IT University (AITU / аиту)?,Исследовательские проекты
+401,student_life,question:career_activities,Какие формы поддержки предоставляются студентам в Astana IT University (AITU / аиту)?,Поддержка студентов
+402,about,question:about,Каковы будущие планы Astana IT University (AITU / аиту)?,Будущие планы
+403,contacts,question:contacts,Где находится Astana IT University (AITU / аиту)?,Местоположение университета
+404,programs,question:programs_list,Какие программы бакалавриата предлагает Astana IT University (AITU / аиту)?,Бакалавриат программы
+405,study_process,question:study_format,Есть ли возможность обучения на удаленной основе в Astana IT University (AITU / аиту)?,Удаленное обучение
+406,student_life,question:career_activities,Какие возможности для стажировок предлагает Astana IT University (AITU / аиту)?,Стажировки и практика
+407,study_process,question:study_format,Каковы языки обучения в Astana IT University (AITU / аиту)?,Языки обучения
+408,masters,question:masters,Какие мастер-программы предлагает Astana IT University (AITU / аиту)?,Магистерские программы
+409,tuition,question:tuition,Есть ли стипендии для студентов Astana IT University (AITU / аиту)?,Студенческие стипендии
+410,about,question:research,Какова роль преподавателей и научных сотрудников в Astana IT University (AITU / аиту)?,Роль преподавателей и научных сотрудников
+411,student_life,question:career_activities,Какие IT-сертификаты можно получить в Astana IT University (AITU / аиту)?,IT-сертификаты
+412,about,question:about,Каковы преимущества обучения в Astana IT University (AITU / аиту)?,Преимущества обучения
+413,study_process,question:study_format,Какие языки преподавания используются в Astana IT University (AITU / аиту)?,Языки преподавания
+414,student_life,question:career_activities,Какие возможности для карьерного роста предоставляет Astana IT University (AITU / аиту)?,Карьерные возможности
+415,student_life,question:mobility_partners,Какие иностранные университеты являются партнерами Astana IT University (AITU / аиту)?,Партнерские университеты
+416,study_process,question:study_format,Какова длительность бакалавриата в Astana IT University (AITU / аиту)?,Длительность бакалавриата
+417,student_life,question:career_activities,Какие культурные мероприятия проводятся в Astana IT University (AITU / аиту)?,Культурные мероприятия
+418,study_process,question:study_format,Сколько лет длится обучение в Astana IT University (AITU / аиту)?,Длительность обучения
+419,student_life,question:career_activities,Каковы особенности студенческой жизни в Astana IT University (AITU / аиту)?,Студенческая жизнь
+420,student_life,question:career_activities,Что такое Startup-community в Astana IT University (AITU / аиту)?,Startup-community
+421,study_process,question:study_format,На каком языке проходит обучение в Astana IT University (AITU / аиту)?,Язык обучения
+422,student_life,question:career_activities,Что такое лаборатории международных IT вендоров в Astana IT University (AITU / аиту)?,Лаборатории международных IT вендоров
+423,admission,question:admission,Какие важные даты связаны с поступлением в Astana IT University (AITU / аиту)?,Важные даты поступления
+424,programs,question:programs,Какие программы предлагает Astana IT University (AITU / аиту) в области информационных технологий?,Программы в области информационных технологий
+425,admission,question:college_foundation,Какие возможности открывает колледж Astana IT University для студентов?,Возможности для студентов
+426,admission,question:college_foundation,Какой диплом выдается выпускникам колледжа Astana IT University?,Диплом выпускникам
+427,admission,question:college_foundation,Могут ли студенты колледжа Astana IT University продолжить обучение в вузе после окончания?,Продолжение обучения после колледжа
+428,admission,question:college_foundation,Какие преимущества предоставляет колледж Astana IT University?,Преимущества колледжа
+429,admission,question:college_foundation,Какие образовательные программы предлагает колледж Astana IT University?,Образовательные программы
+430,admission,question:college_foundation,Какие компании предоставляют поддержку колледжу Astana IT University?,Поддержка компаний
+431,admission,question:college_foundation,"Что такое IT-комьюнити Казахстана, и почему оно важно для колледжа Astana IT University?",IT-комьюнити Казахстана
+432,admission,question:college_foundation,Что предлагает образовательная программа 'Программное обеспечение' в колледже Astana IT University?,Программа 'Программное обеспечение'
+433,admission,question:college_foundation,Какую квалификацию получают студенты по образовательной программе 'Программное обеспечение' в колледже Astana IT University?,Квалификация по программе 'Программное обеспечение'
+434,admission,question:college_foundation,На каком языке обучения доступна программа 'Вычислительная техника и информационные сети' в колледже Astana IT University?,Язык обучения по программе 'Вычислительная техника и информационные сети'
+435,admission,question:college_foundation,Какую специальность могут получить студенты по образовательной программе 'Вычислительная техника и информационные сети' в колледже Astana IT University?,Квалификация по программе 'Вычислительная техника и информационные сети'
+436,admission,question:college_foundation,Какие задачи выполняет специалист по образовательной программе 'Техник по администрированию базы данных' после окончания колледжа Astana IT University?,Задачи специалиста по программе 'Вычислительная техника и информационные сети'
+437,admission,question:college_foundation,Где могут работать выпускники образовательной программы 'Техник по администрированию базы данных' после окончания колледжа Astana IT University?,Рабочие места для выпускников по программе 'Вычислительная техника и информационные сети'
+438,admission,question:college_foundation,Какие преимущества предлагает колледж Astana IT University своим студентам?,Преимущества колледжа
+439,admission,question:college_foundation,Какие документы необходимы для поступления в колледж Astana IT University?,Документы для поступления
+440,student_life,question:career_activities,Что такое IT-вендоры и какие возможности они предоставляют студентам Astana IT University?,IT-вендоры и возможности
+441,admission,question:college_foundation,В каких проектах активно участвует колледж Astana IT University?,Участие в проектах
+442,admission,question:college_foundation,Какова гибкая система оплаты обучения в колледже Astana IT University?,Система оплаты обучения
+443,admission,question:college_foundation,Что такое Foundation Astana IT University?,Foundation
+444,admission,question:college_foundation,Какова цель программы Foundation Astana IT University?,Foundation
+445,admission,question:college_foundation,Как проходит обучение в программе Foundation?,Foundation
+446,admission,question:college_foundation,Какие преимущества получают выпускники программы Foundation?,Foundation
+447,admission,question:college_foundation,Какие предметы включает подготовка к ЕНТ в программе Foundation?,Foundation
+448,admission,question:college_foundation,Какой язык обучения используется в программе Foundation?,Foundation
+449,admission,question:college_foundation,Как долго длится программа Foundation и какой формат обучения?,Foundation
+450,student_life,question:career_activities,Что представляет собой коворкинг AITU?,Kovorking
+451,student_life,question:career_activities,Кто может стать резидентами коворкинга AITU?,Kovorking
+452,student_life,question:career_activities,Как подать заявку на мероприятие в коворкинге AITU?,Kovorking
+453,student_life,question:career_activities,Что такое MVP (Minimal Valuable Product) в AITU?,MVP
+454,student_life,question:career_activities,Какие задачи решает MVP в AITU?,MVP
+455,student_life,question:career_activities,Как регламентируется порядок приема заявок на MVP в AITU?,MVP
+456,admission,question:entrance_exam,Что представляет собой AITU Excellence Test?,AITU Excellence Test
+457,admission,question:entrance_exam,Когда будет проведен AITU Excellence Test?,AITU Excellence Test
+458,admission,question:entrance_exam,Какой формат проведения AITU Excellence Test?,AITU Excellence Test
+459,admission,question:entrance_exam,Что включает 1 модуль AITU Excellence Test?,AITU Excellence Test
+460,admission,question:entrance_exam,Какие международные сертификаты освобождают от сдачи 1 модуля AITU Excellence Test?,AITU Excellence Test
+461,admission,question:entrance_exam,Какие материалы рекомендованы для подготовки к 1 модулю AITU Excellence Test?,AITU Excellence Test
+462,admission,question:entrance_exam,Что представляет собой 2 модуль AITU Excellence Test?,AITU Excellence Test
+463,admission,question:entrance_exam,Какие материалы рекомендованы для подготовки к 2 модулю AITU Excellence Test?,AITU Excellence Test
+464,admission,question:entrance_exam,Какая оплата требуется для абитуриентов сдающих 2 модуль AITU Excellence Test на базе Ustudy?,AITU Excellence Test
+465,admission,question:entrance_exam,Кто освобождается от сдачи 2 модуля AITU Excellence Test?,AITU Excellence Test
+466,admission,question:entrance_exam,Каким образом происходит регистрация на AITU Excellence Test (АЕТ)?,AITU Excellence Test
+467,admission,question:entrance_exam,Как освободиться от сдачи 1 модуля AITU Excellence Test?,AITU Excellence Test
+468,admission,question:entrance_exam,Как освободиться от сдачи 2 модуля AITU Excellence Test?,AITU Excellence Test
+469,admission,question:entrance_exam,Как производится оплата за вступительный экзамен AITU Excellence Test для абитуриентов сдающих на базе Ustudy?,AITU Excellence Test
+470,admission,question:entrance_exam,На каких языках проводится AITU Excellence Test?,AITU Excellence Test
+471,admission,question:admission,Каким образом абитуриенты могут получить уведомление об экзамене?,AITU Excellence Test
+472,admission,question:college_foundation,Что представляет собой Foundation Astana IT University?,Astana IT University
+473,admission,question:entrance_exam,Каковы условия оплаты AITU Excellence Test для абитуриентов сдающих в центрах Ustudy в регионах Казахстана?,AITU Excellence Test
+474,student_life,question:career_activities,Когда состоялась гостевая лекция Николая Тяна и о чем была тема?,Гостевые лекции и мастер классы
+475,student_life,question:career_activities,Когда прошел научный семинар и о чем была тема?,Гостевые лекции и мастер классы
+476,student_life,question:career_activities,Когда была Q&A сессия с командой бизнес-инкубатора и бизнес-акселератора NURIS и о чем была тема?,Гостевые лекции и мастер классы
+477,student_life,question:career_activities,Когда состоялась лекция на тему «Стартапы и выход на международные рынки» и кем она была проведена?,Гостевые лекции и мастер классы
+478,student_life,question:career_activities,Когда прошла гостевая лекция от специалистов PwC Kazakhstan и о чем она была?,Гостевые лекции и мастер классы
+479,student_life,question:career_activities,Когда была проведена Workshop сессия и какие были приоритетные направления?,Гостевые лекции и мастер классы
+480,student_life,question:career_activities,Какие основные задачи коворкинга?,Цели и задачи коворкинга
+481,about,question:university_documents,Какая миссия университета?,Миссия университета
+482,about,question:university_documents,Какое видение университета?,Видение университета
+483,about,question:university_documents,Каковы глобальные цели университета?,Глобальная цель университета
+484,about,question:university_documents,Какие стратегические ориентиры университета?,Стратегические ориентиры университета
+485,about,question:university_documents,Кто является учредителями Astana IT University?,Учредители Astana IT University
+486,about,question:university_documents,Что такое институциональная аккредитация?,Институциональная аккредитация
+487,student_life,question:career_activities,Сколько выпускников было в 2022 году?,Выпускники
+488,student_life,question:career_activities,Какой процент трудоустроенных выпускников?,Трудоустроенные выпускники
+489,student_life,question:career_activities,Сколько выпускников официально трудоустроены и продолжают обучение в магистратуре?,Трудоустроенные и обучающиеся в магистратуре
+491,student_life,question:career_activities,Чьи отзывы о университете представлены?,Отзывы выпускников
+492,admission,question:admission,Какие важные даты для поступления в Astana IT University?,Важные даты
+493,contacts,question:contacts,Как можно получить консультацию по поступлению в Astana IT University?,Получить консультацию
+494,contacts,question:contacts,Каков график работы приемной комиссии Astana IT University?,Контакты
+495,study_process,question:grading,Академический календарь,учебный процесс
+496,about,question:university_documents,Устав,документы
+497,about,question:university_documents,Лицензия,документы
+498,study_process,question:grading,Кредитная система,учебный процесс
+499,study_process,question:study_format,Формы организации занятий,учебный процесс
+500,study_process,question:grading,Промежуточная аттестация,учебный процесс
+501,study_process,question:grading,Балльно-рейтинговая система оценки,учебный процесс
+502,study_process,question:grading,Форма экзамена,учебный процесс
+503,study_process,question:grading,Moodle,учебный процесс
+504,study_process,question:study_format,Дистанционное обучение,учебный процесс
+505,study_process,question:study_format,Онлайн режим обучения,учебный процесс
+506,study_process,question:study_format,Оффлайн режим обучения,учебный процесс
+507,programs,question:programs_list,Какие специальности предлагает Astana IT University?,учебные программы
+508,about,question:about,Каковы основные преимущества обучения в Astana IT University?,преимущества
+509,programs,question:programs,Какие дополнительные образовательные программы предоставляет университет?,дополнительные программы
+510,admission,question:admission,Как проходит процесс подачи документов на поступление в AITU?,поступление
+511,study_process,question:grading,Какие формы промежуточной аттестации используются в университете?,промежуточная аттестация
+512,study_process,question:grading,Какая форма экзамена по каждой учебной дисциплине?,форма экзамена
+513,study_process,question:grading,Что такое Moodle и какую поддержку он предоставляет студентам?,Moodle
+514,study_process,question:study_format,Можно ли получить образование в AITU в онлайн режиме?,онлайн образование
+515,student_life,question:career_activities,Какие возможности для стажировок и практики предоставляет Astana IT University?,стажировки и практика
+516,student_life,question:career_activities,Какие мероприятия и мероприятия проводятся в университете для студентов?,студенческая жизнь
+517,admission,question:admission,Каковы требования к знанию иностранного языка для поступления в университет?,языковые требования
+518,about,question:research,Какие исследовательские проекты предоставляются в университете?,исследовательские проекты
+519,student_life,question:mobility_partners,Какие компании и партнеры сотрудничают с Astana IT University?,партнеры университета
+520,study_process,question:study_format,Какая длительность обучения в Astana IT University?,длительность обучения
+521,student_life,question:career_activities,Какие возможности предоставляются студентам для участия в стартап-сообществе?,стартап-сообщество
+522,tuition,question:tuition,Какие виды скидок предоставляются обучающимся на платной основе?,скидки для обучающихся
+523,student_life,question:career_activities,Какие формы помощи и поддержки предоставляются для студентов с особыми потребностями?,поддержка для студентов с особыми потребностями
+524,about,question:research,Какие научные исследования проводятся в области информационных технологий в университете?,научные исследования
+525,programs,override,Какие предметы и дисциплины изучаются в бакалавриате и магистратуре?,предметы и дисциплины
+526,student_life,question:mobility_partners,Какие возможности для обмена и международной мобильности предоставляются студентам?,международная мобильность
+527,study_process,question:study_format,Какие учебные материалы и ресурсы предоставляются студентам в университете?,учебные материалы и ресурсы
+528,scores_grants,question:scores_grants,Каковы требования к допуску к участию в олимпиадах и конкурсах по информационным технологиям?,требования к олимпиадам и конкурсам
+529,student_life,question:career_activities,Какие возможности для профессионального развития предоставляются выпускникам университета?,профессиональное развитие выпускников
+530,study_process,question:study_format,Какие иностранные языки изучаются в университете?,иностранные языки в университете
+531,about,question:about,Какими преимуществами обладает кампус Astana IT University?,преимущества кампуса
+532,dormitory,question:dormitory,Какие общежития предоставляются студентам университета?,общежития для студентов
+533,study_process,question:study_format,Какой срок обучения в университете?,срок обучения
+534,study_process,question:study_format,Какие формы обучения доступны в университете?,формы обучения
+535,student_life,question:mobility_partners,Какие иностранные университеты являются партнерами AITU?,партнеры AITU
+536,tuition,question:tuition,Есть ли стипендии и финансовая помощь для студентов?,стипендии и финансовая помощь
+537,tuition,question:tuition,Какова стоимость обучения в университете?,стоимость обучения
+538,student_life,question:career_activities,Есть ли возможность проходить профессиональную практику в крупных IT-компаниях?,профессиональная практика
+539,student_life,question:career_activities,Какие программы и мероприятия предлагает университет для развития Soft Skills?,развитие Soft Skills
+540,student_life,question:career_activities,Какие возможности для карьерного роста предоставляет университет выпускникам?,карьерный рост выпускников
+541,student_life,question:career_activities,Есть ли университет спортивные команды и секции?,спортивные команды и секции
+542,student_life,question:career_activities,Какие проекты и стартапы создают студенты университета?,проекты и стартапы студентов
+543,about,question:research,Какие исследовательские программы предлагает университет?,исследовательские программы
+544,student_life,question:career_activities,Какова репутация университета среди работодателей?,репутация университета
+545,student_life,question:mobility_partners,Есть ли университет международные программы обмена?,международные программы обмена
+546,student_life,question:career_activities,Какие культурные мероприятия проводятся в университете?,культурные мероприятия
+547,student_life,question:career_activities,Какие возможности для развития профессиональных навыков предоставляет университет?,развитие профессиональных навыков
+548,student_life,question:career_activities,Есть ли университет специализированные курсы и сертификаты от ведущих IT-компаний?,специализированные курсы и сертификаты
+549,study_process,question:study_format,Какие иностранные языки преподаются в университете?,преподавание иностранных языков
+550,about,question:about,Какие проекты и инициативы университета направлены на экологическую ответственность?,экологическая ответственность
+551,student_life,question:career_activities,Какие возможности для профессиональной сетевой активности предоставляет университет?,профессиональная сетевая активность
+552,contacts,question:contacts,Какой адрес университета?,адрес университета
+553,contacts,question:contacts,Как связаться с приемной комиссией?,контакт приемной комиссии
+554,contacts,question:contacts,Каковы рабочие часы университета?,рабочие часы университета
+555,admission,question:admission,Какие документы необходимо предоставить для поступления?,документы для поступления
+556,study_process,question:study_format,Какие формы организации занятий используются в университете?,формы занятий
+557,study_process,question:grading,Какая политика оценивания результатов обучения в университете?,политика оценивания
+558,study_process,question:study_format,Есть ли возможность обучения на иностранном языке?,обучение на иностранном языке
+559,masters,question:masters,Какие программы обучения предоставляются на магистратуре?,программы магистратуры
+560,tuition,question:tuition,Какие скидки и льготы предоставляются обучающимся на платной основе?,скидки и льготы для платного обучения
+561,study_process,question:study_format,Какие возможности для дистанционного обучения предоставляются студентам?,дистанционное обучение
+562,military,question:military,Что представляет собой Военная кафедра в университете?,Военная кафедра
+563,military,question:military,Какая основная задача кафедры?,основная задача кафедры
+564,military,question:military,Какова цель работы кафедры?,цель работы кафедры
+565,military,question:military,Какие виды деятельности осуществляет Военная кафедра?,деятельность Военной кафедры
+566,military,question:military,"Какие требования предъявляются к студентам, подготавливающимся на Военной кафедре?",требования к студентам Военной кафедры
+567,military,question:military,Какие протоколы отборочной комиссии существуют для поступления на Военную кафедру?,отборочные протоколы
+568,military,question:military,Что включает в себя материально-техническая база Военной кафедры?,материально-техническая база
+569,military,question:military,Какие военно-учетные специальности предлагаются по программе офицеров запаса?,военно-учетные специальности офицеров
+570,military,question:military,Какие военно-учетные специальности предлагаются по программе сержантов запаса?,военно-учетные специальности сержантов
+571,military,question:military,Что содержится в памятке для студентов?,памятка для студентов
+572,military,question:military,Какие этапы включает конкурс для отбора студентов на Военную кафедру?,этапы конкурса
+573,military,question:military,Какие анализы необходимо сдать на медицинском освидетельствовании для поступления на Военную кафедру?,медицинское освидетельствование
+574,military,question:military,Где проводится медицинская комиссия для отбора на Военную кафедру?,место проведения медицинской комиссии
+575,military,question:military,"Что происходит, если студент не проходит медицинскую комиссию или признан не годным к военной подготовке?",результаты медицинской комиссии
+576,military,question:military,Что включает профессионально-психологическое тестирование на Военной кафедре?,профессионально-психологическое тестирование
+577,military,question:military,"Что происходит, если студент не проходит профессионально-психологическое тестирование?",результаты тестирования
+578,military,question:military,Как оценивается физическая подготовленность студентов на Военной кафедре?,оценка физической подготовленности
+579,military,question:military,"Что происходит, если студент не проходит проверку физической подготовленности?",результаты проверки физической подготовленности
+580,military,question:military,Что включает конкурсный отбор на Военную кафедру?,конкурсный отбор
+581,military,question:military,Какие решения могут быть приняты на конкурсном отборе?,решения на конкурсном отборе
+582,military,question:military,Какие студенты допускаются на обучение на бесплатной основе на Военной кафедре?,обучение на бесплатной основе
+583,military,question:military,Какие сроки подачи заявления на Военную кафедру?,Application Process
+584,military,question:military,Как узнать сроки подачи документов на Военную кафедру?,Application Process
+586,student_life,question:mobility_partners,Где расположен University of Latvia и что предлагает этот университет?,University of Latvia
+587,student_life,question:mobility_partners,Где расположен Ankara University и какие программы предлагает этот университет?,Ankara University
+588,student_life,question:mobility_partners,Где находится Schmalkalden University of Applied Sciences и чем отличается его образовательная программа?,Schmalkalden University of Applied Sciences
+589,student_life,question:mobility_partners,Где находится Cracow University of Technology и в какой области специализируется этот университет?,Cracow University of Technology
+590,student_life,question:mobility_partners,Какие возможности предоставляет программы академической мобильности для студентов Astana IT University?,Академическая мобильность
+594,admission,question:admission,Как поступить на платное отделение Astana IT University (AITU / аиту)?,AITU_paid_admission
+595,admission,question:admission,Как поступить в Astana IT University (AITU / аиту)?,AITU_admission
+596,tuition,question:tuition,Какова стоимость обучения в Astana IT University (AITU / аиту)?,AITU_tuition_fees
+597,study_process,question:study_format,Какой срок обучения на бакалавриате в AITU (аиту)?,AITU_bachelors_duration
+598,study_process,question:study_format,На каком языке проводится обучение в Astana IT University (AITU / аиту)?,AITU_instruction_language
+599,dormitory,question:dormitory,Есть ли общежитие в Astana IT University (AITU / аиту)?,AITU_dormitory
+600,programs,question:programs_list,Какие программы бакалавриата предлагает Astana IT University (AITU / аиту)?,AITU_bachelors_programs
+601,masters,question:masters,Какие программы магистратуры доступны в Astana IT University (AITU / аиту)?,AITU_masters_programs
+602,tuition,question:tuition,Есть ли стипендии или финансовая помощь для студентов в Astana IT University (AITU / аиту)?,AITU_scholarships
+603,contacts,question:contacts,Как связаться с приемной комиссией Astana IT University (AITU / аиту)?,AITU_contact_admissions
+604,admission,question:admission,Как узнать актуальные даты и сроки подачи заявлений в Astana IT University (AITU / аиту)?,AITU_application_deadlines
+605,student_life,question:mobility_partners,Что такое академическая мобильность?,academic_mobility
+606,student_life,question:mobility_partners,Какие преимущества предоставляет академическая мобильность для студентов?,benefits_of_mobility
+607,student_life,question:mobility_partners,Какие университеты-партнеры сотрудничают с Astana IT University для программы академической мобильности?,partner_universities
+608,student_life,question:mobility_partners,Какие критерии могут давать преимущество студентам при равных баллах в программе академической мобильности?,selection_criteria
+609,tuition,question:tuition,Как узнать стоимость обучения в Astana IT University?,tuition_fees_info
+610,scores_grants,question:scores_grants,Что такое Единый национальный тест (ЕНТ)?,ENT_overview
+611,scores_grants,question:scores_grants,Как подготовиться к Единый национальный тесту (ЕНТ)?,ENT_preparation
+612,scores_grants,question:scores_grants,Какие предметы входят в состав Единый национальный теста (ЕНТ)?,ENT_subjects
+613,scores_grants,question:scores_grants,Какая роль оценок ЕНТ в поступлении в университет?,ENT_role_in_admission
+615,programs,question:programs,Какие программы обучения предлагает Astana IT University?,AITU_programs
+616,about,question:about,Каковы преимущества учебы в Astana IT University?,AITU_advantages
+617,student_life,question:career_activities,Каковы перспективы карьеры для выпускников Astana IT University?,AITU_career_prospects
+618,study_process,question:study_format,На каком языке ведется обучение в университете AITU?,AITU_instruction_language
+619,about,override,"Как называется павильон, расположенный рядом с университетом и привлекающий туристов?",AITU_ecosystem
+620,about,override,Что представляет собой Международный финансовый центр 'Астана'?,AITU_ecosystem
+621,about,override,Какой технопарк находится рядом с университетом и предназначен для развития инновационных технологий и стартапов?,AITU_ecosystem
+622,about,override,Какая площадка предназначена для крупных деловых и культурных встреч и способна вместить до 4500 человек?,AITU_ecosystem
+623,about,override,Какой театр сочетает современный облик с красотой архитектурного комплекса Нур-Султана?,AITU_ecosystem
+624,about,class:about,Какая казахстанская государственная компания занимается развитием современных инфокоммуникационных технологий?,AITU_ecosystem
+625,about,class:about,Какое министерство занимается формированием и реализацией государственной политики в области цифрового развития страны и других сфер?,AITU_ecosystem
+626,about,class:about,Какой казахстанский IT-холдинг входит в ТОП-5 ведущих IT-разработчиков Центральной Азии?,AITU_ecosystem
+627,about,class:about,Какой швейцарский инвестиционный холдинг ориентирован на позитивное влияние на жизнь людей в развивающихся рынках через технологии и предпринимательство?,AITU_ecosystem
+628,study_process,question:study_format,На каком языке ведется обучение в университете AITU?,AITU_instruction_language
+629,study_process,question:study_format,Как долго длится обучение на бакалавриате в AITU?,AITU_bachelors_duration
+630,contacts,question:contacts,Как связаться с университетом для получения дополнительной информации?,AITU_contact_info
+631,student_life,question:mobility_partners,Какова роль Центра карьеры и трудоустройства в Astana IT University?,Роль Центра
+632,student_life,question:mobility_partners,"Что включает в себя профессиональная практика, организованная Центром карьеры и трудоустройства?",Профессиональная практика
+633,student_life,question:mobility_partners,Каким образом Центр карьеры и трудоустройства помогает выпускникам установить контакты с потенциальными работодателями?,Помощь выпускникам
+634,student_life,question:mobility_partners,Какие виды консультаций о карьере предоставляет Центр карьеры и трудоустройства студентам и выпускникам?,Консультации о карьере
+635,student_life,question:mobility_partners,"Что включает в себя мониторинг рынка труда, проводимый Центром карьеры и трудоустройства?",Мониторинг рынка труда
+636,student_life,question:mobility_partners,Какие сотрудничества Центр карьеры и трудоустройства развивает с предприятиями и организациями?,Сотрудничество с предприятиями
+637,student_life,question:mobility_partners,Каким образом Центр карьеры и трудоустройства помогает студентам повысить свою конкурентоспособность на рынке труда?,Повышение конкурентоспособности
+638,student_life,question:mobility_partners,Как выпускники могут оставаться связанными с университетом через Центр карьеры и трудоустройства?,Связь с выпускниками
+639,student_life,question:mobility_partners,"Какова роль социологических опросов, проводимых Центром карьеры и трудоустройства, в улучшении образовательных программ университета?",Социологические опросы
+640,student_life,question:mobility_partners,Как Центр карьеры и трудоустройства способствует развитию карьеры выпускников на протяжении трех лет после окончания университета?,Развитие карьеры выпускников
+651,programs,question:programs_list,Какие специальности предлагает Astana IT University для поступления?,Specialties
+652,scores_grants,question:scores_grants,Какие предметы необходимо сдать для поступления на специальность Computer Science?,Computer Science
+653,scores_grants,question:scores_grants,Какие предметы требуются для поступления на специальность Big Data Analysis (Анализ больших данных)?,Big Data Analysis
+654,scores_grants,question:scores_grants,Какие профильные предметы нужно сдать для поступления на специальность Media Technologies (Медиа технологии)?,Media Technologies
+655,scores_grants,question:scores_grants,"Какие специальности связаны с математическими и вычислительными науками, и какие предметы необходимо сдать для их поступления?",Mathematical & Computational Science
+656,scores_grants,question:scores_grants,Какие профильные предметы требуются для поступления на специальность Cybersecurity (Кибербезопасность)?,Cybersecurity
+657,scores_grants,question:scores_grants,Какие предметы нужно сдать для поступления на специальность Smart Technologies (Умные технологии)?,Smart Technologies
+658,scores_grants,question:scores_grants,Какие предметы требуются для поступления на специальность Industrial Internet of Things (Промышленный интернет вещей)?,Industrial Internet of Things
+659,scores_grants,question:scores_grants,Какие предметы нужно сдать для поступления на специальность IT Management (IT менеджмент)?,IT Management
+660,scores_grants,question:scores_grants,Какие требования к ЕНТ сдаче существуют для специальности Digital Journalism (Цифровая журналистика)?,Digital Journalism
+661,scores_grants,question:scores_grants,Какие предметы необходимо сдать для поступления на специальность IT Entrepreneurship (IT предпринимательство)?,IT Entrepreneurship
+662,admission,cluster,Можно ли поступить в AITU только по результатам ЕНТ или есть другие возможности для поступления?,Admission
+663,programs,question:programs,Какие программы обучения предлагает Astana IT University?,Programs
+664,programs,question:programs,Какие языки программирования изучают студенты на специальности Computer Science?,Computer Science
+665,programs,question:programs,Какие технологии используются в обучении студентов на специальности Big Data Analysis?,Big Data Analysis
+666,programs,question:programs,Какие программы для обработки медиа контента изучают студенты на специальности Media Technologies?,Media Technologies
+667,programs,question:programs,Какие математические методы изучают студенты на специальности Mathematical & Computational Science?,Mathematical & Computational Science
+668,programs,question:programs,Какие методы и инструменты защиты информации изучают студенты на специальности Cybersecurity?,Cybersecurity
+669,programs,question:programs,Какие технологии умных устройств изучают студенты на специальности Smart Technologies?,Smart Technologies
+670,programs,question:programs,Какие технологии промышленной автоматизации изучают студенты на специальности Industrial Internet of Things?,Industrial Internet of Things
+671,programs,question:programs,Какие аспекты управления информационными технологиями изучают студенты на специальности IT Management?,IT Management
+672,programs,question:programs,Какие техники цифровой журналистики изучают студенты на специальности Digital Journalism?,Digital Journalism
+673,student_life,question:career_activities,Какие навыки предпринимательства и стартапов изучают студенты на специальности IT Entrepreneurship?,IT Entrepreneurship
+674,student_life,question:mobility_partners,"Какие условия предоставляются для иностранных студентов, желающих поступить в Astana IT University?",International Students
+675,programs,question:programs,Что изучает специальность Computer Science?,Computer Science
+676,programs,question:programs,Какие технологии изучают на специальности Big Data Analysis?,Big Data Analysis
+677,programs,question:programs,Что включает специальность Media Technologies?,Media Technologies
+678,programs,question:programs,Какие предметы изучают студенты на специальности Mathematical & Computational Science?,Mathematical & Computational Science
+679,programs,question:programs,Что изучает специальность Cybersecurity?,Cybersecurity
+680,programs,question:programs,Какие технологии изучают на специальности Smart Technologies?,Smart Technologies
+681,programs,question:programs,Что включает специальность Industrial Internet of Things?,Industrial Internet of Things
+682,programs,question:programs,Какие аспекты управления изучают на специальности IT Management?,IT Management
+683,programs,question:programs,Что изучают на специальности Digital Journalism?,Digital Journalism
+684,student_life,cluster,Какие навыки предпринимательства изучают на специальности IT Entrepreneurship?,IT Entrepreneurship
+685,student_life,question:mobility_partners,Какие условия предоставляются для иностранных студентов?,International Students
+686,about,question:about,Какой уровень образования предоставляет Astana IT University?,General
+687,study_process,question:study_format,Сколько времени занимает обучение на специальности Big Data Analysis?,Big Data Analysis
+688,student_life,question:career_activities,Какие возможности трудоустройства предоставляет университет выпускникам?,Career Support
+689,student_life,question:career_activities,Что представляет собой инкубатор стартапов на кампусе?,Startup Incubator
+690,programs,question:programs_list,Какие специальности предлагает Astana IT University?,специальности
+691,about,question:about,Какие преимущества учебы в Astana IT University?,преимущества
+692,study_process,question:study_format,Какие иностранные языки изучают студенты в Astana IT University?,иностранные языки
+693,tuition,question:tuition,Есть ли в университете стипендии или финансовая помощь для студентов?,стипендии
+694,student_life,question:mobility_partners,Какие программы обмена студентами доступны в Astana IT University?,программы обмена
+695,student_life,question:mobility_partners,Каковы требования для участия в программе обмена студентами?,требования обмена
+696,study_process,question:grading,Как устроена система оценок в университете?,система оценок
+697,student_life,question:career_activities,Какие мероприятия и активности предлагает университет для студентов?,мероприятия
+698,student_life,question:career_activities,Каковы возможности трудоустройства для выпускников Astana IT University?,трудоустройство
+699,about,question:research,Существуют ли исследовательские программы или проекты для студентов в университете?,исследовательские программы
+700,admission,question:admission,Каковы сроки подачи заявлений на поступление в Astana IT University?,сроки поступления
+701,admission,question:admission,Как узнать результаты поступления?,результаты поступления
+702,about,question:research,Какие исследовательские возможности предоставляет университет для студентов?,исследовательские возможности
+703,about,question:research,Какие возможности для участия в исследовательских проектах предоставляет Astana IT University?,участие в исследовательских проектах
+704,about,question:research,Какие достижения имеет Astana IT University в области научных исследований?,достижения в научных исследованиях

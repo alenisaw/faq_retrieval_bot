@@ -34,15 +34,44 @@ CPU-сборка torch весит в разы меньше полной и дл�
 Модели `intfloat/multilingual-e5-small` и `paraphrase-multilingual-MiniLM-L12-v2`
 (~470 МБ каждая) скачиваются с Hugging Face при первом использовании.
 
+## Быстрый старт
+
+После установки — одна команда из папки `backend/`:
+
+```bash
+python main.py --setup     # очистка данных -> faq_clean.parquet, faq.db; оценка методов без нейросетей
+python main.py             # консольное меню (пункты 1–7)
+python main.py --ask "общага есть?"
+python main.py --serve     # веб-API: http://localhost:8000/docs
+```
+
+Или всё в Docker (из корня репозитория, Python ставить не нужно):
+
+```bash
+docker compose up --build                         # API на http://localhost:8000
+docker compose --profile frontend up --build      # + фронтенд на http://localhost:3000
+docker compose down -v                            # сбросить журнал бота и прогоны
+```
+
 ## Структура
 
 ```
 backend/
-├── data/raw/                 # исходный CSV
-├── data/processed/           # faq_clean.parquet, faq.db, cache/ (эмбеддинги)
+├── data/raw/                 # исходный CSV и его копия faq_raw.parquet
+├── data/processed/           # faq_clean.parquet, faq.db, cleaning_log.json,
+│                             # topic_review.csv, cluster_review.csv, cache/ (эмбеддинги)
 ├── eval/                     # test_queries.csv, qrels.csv
+├── sql/
+│   ├── schema.sql            # 11 таблиц + 2 представления
+│   └── queries.sql           # 11 именованных SQL-отчётов
 ├── src/
 │   ├── config.py             # пути, темы, общие настройки
+│   ├── data_loader.py        # аудит и очистка -> faq_clean.parquet + cleaning_log.json
+│   ├── topic_map.py          # 422 исходных класса -> 12 тем (правила + ручные исправления)
+│   ├── entities.py           # сущности: URL, PHONE, EMAIL, MONEY, DATE (regex), ORG, LOC (spaCy)
+│   ├── db.py                 # SQLite: схема, загрузка корпуса, прогоны, журнал бота, отчёты
+│   ├── pipeline.py           # очистка -> faq.db одной командой
+│   ├── api/                  # FastAPI: app.py, schemas.py, state.py, routes/
 │   ├── preprocessing.py      # нормализация, токенизация, стоп-слова, stem / lemma
 │   ├── retrievers/           # методы поиска с общим интерфейсом fit / search
 │   ├── evaluation.py         # метрики, протоколы A и B, ресурсы, порог, confusion matrix
@@ -50,9 +79,107 @@ backend/
 │   ├── experiments.py        # все эксперименты AI-модуля одним запуском
 │   └── chatbot.py            # чат-бот поверх любого метода
 ├── tests/
+├── main.py                   # консольное меню
+├── Dockerfile
 └── requirements.txt
-reports/                      # metrics/, figures/
+reports/                      # metrics/, figures/, sql/
+docker-compose.yml
 ```
+
+## Данные: аудит и очистка
+
+`python -m src.data_loader` (или пункт 1 меню). Каждое правило пишет в
+`data/processed/cleaning_log.json`, какие строки оно задело; сводная таблица —
+`reports/metrics/cleaning_audit.csv`.
+
+| Правило | Что делает | Строк |
+|---|---|---|
+| `header_row` | повтор заголовка внутри файла — удалить | 1 |
+| `broken_csv_row` | строка разрезана запятой, хвост ответа в колонке класса — удалить (нет вопроса / ответ оборван) | 3 |
+| `answer_in_question` | «Где кабинет 1с?, ответ: …» — разнести по колонкам | 1 |
+| `question_prefix` | «Вопрос 1: …» — убрать префикс | 1 |
+| `whitespace_quotes` | strip, внешние кавычки, литеральные `\n` | 180 |
+| `answer_is_slug` | вместо ответа идентификатор (`AITU_iot`) — удалить | 10 |
+| `translation_not_answer` | пункт учебного плана + его перевод на английский — удалить | 21 |
+| `empty_answer` | «…не представлена в данном контексте» — удалить | 1 |
+| `duplicate_pair` | одинаковая пара вопрос–ответ после нормализации — удалить | 37 |
+
+Итог: 608 → 535 строк, 470 кластеров ответов (50 — с двумя и более вопросами), 12 тем.
+
+- **`faq_id`** — индекс строки в исходном CSV: по нему любую строку можно найти в исходнике.
+- **`answer_cluster`** объединяет одинаковые ответы, одинаковые вопросы и перефразы из
+  `MANUAL_CLUSTER_LINKS`. Короткие ответы («85 баллов.») склеиваются только при одинаковом
+  исходном классе — иначе Computer Science и Software Engineering стали бы одним кластером.
+  Номер кластера = минимальный `faq_id` в нём, поэтому он стабилен при пересборке;
+  на него ссылается `eval/qrels.csv`.
+- **`topic`** — правила из `src/topic_map.py`: сначала по вопросу, потом по классу, по
+  умолчанию «об университете». У всех строк кластера одна тема. Для ручной проверки —
+  `data/processed/topic_review.csv` (колонка `topic_source` показывает сработавшее правило),
+  исправления — в `TOPIC_OVERRIDES`. Колледж и Foundation отнесены к «процессу поступления».
+- **`is_dated`** — ответ упоминает 2020–2025 год, дату или «Нур-Султан» (17 строк);
+  бот добавляет к таким ответам предупреждение.
+
+## База данных и SQL
+
+`data/processed/faq.db` (SQLite) строится пунктом 1 меню. Схема — `backend/sql/schema.sql`:
+
+| Таблица | Содержимое |
+|---|---|
+| `topics`, `answer_clusters`, `faqs` | корпус: 12 тем, кластеры ответов, 535 FAQ |
+| `keywords` | топ-10 термов каждого FAQ по TF-IDF (леммы) |
+| `entities` | ORG, LOC, URL, PHONE, EMAIL, MONEY, DATE |
+| `queries`, `qrels` | ручной тест-набор из `eval/` (загружается, когда файлы появятся) |
+| `methods`, `runs`, `results` | конфигурации методов, прогоны с ресурсами, топ-10 выдачи каждого запроса |
+| `chat_log` | вопросы к боту из меню и API: метод, топ-1, score, был ли отказ |
+
+Представления `v_result_clusters` и `v_query_outcome` сворачивают выдачу до кластеров,
+как это делает `src/evaluation.py`, поэтому MRR из SQL совпадает с посчитанным в Python.
+
+SQL-отчёты (`backend/sql/queries.sql`, пункт 6 меню, `GET /api/reports/{name}`):
+
+| Имя | Что показывает | Приёмы |
+|---|---|---|
+| `mrr_by_method` | MRR@10, P@1, Hit@3/5 по методам | CTE, JOIN, представление |
+| `p1_by_topic` | P@1 по темам и методам | JOIN, GROUP BY, HAVING |
+| `method_rank_in_topic` | место метода в каждой теме | `RANK() OVER (PARTITION BY …)` |
+| `top_keywords_per_topic` | топ-5 слов темы по сумме TF-IDF | `ROW_NUMBER() OVER` |
+| `duplicate_answers` | один ответ на несколько вопросов | GROUP BY, HAVING, GROUP_CONCAT |
+| `hard_queries` | запросы, где ошиблись все методы | `NOT EXISTS` |
+| `dated_answers` | ответы с датами и суммами | JOIN `faqs` × `entities` |
+| `latency_by_method` | средняя и p95 задержка | `NTILE(20)` |
+| `mrr_change_between_runs` | изменение MRR между прогонами | `LAG()` |
+| `chat_topics` | частые темы и доля отказов в журнале бота | LEFT JOIN, `SUM() OVER ()` |
+| `resources_by_method` | время индексации, память, размер | CTE, JOIN |
+
+```python
+from src import db
+with db.connect() as conn:
+    df = db.run_report(conn, "mrr_by_method")    # pandas.DataFrame
+```
+
+## Веб-API
+
+`python main.py --serve` или `uvicorn src.api.app:app --reload` (из `backend/`).
+Интерактивная документация — http://localhost:8000/docs.
+
+| Метод | Путь | Что делает |
+|---|---|---|
+| POST | `/api/chat` | `{"query": "общага есть?", "method": null, "k": 3}` → ответ бота, топ-k разных ответов со score |
+| POST | `/api/compare` | один вопрос сразу несколькими методами (по умолчанию — все лексические) |
+| GET | `/api/methods` | методы, метод по умолчанию, какие индексы уже построены |
+| GET | `/api/topics` | 12 тем и число FAQ |
+| GET | `/api/faqs?topic=&q=&limit=&offset=` | база FAQ с фильтрами |
+| GET | `/api/faqs/{id}` | один FAQ |
+| GET | `/api/metrics?protocol=loo\|test` | метрики последнего прогона каждого метода |
+| GET | `/api/reports`, `/api/reports/{name}` | список SQL-отчётов и результат одного |
+| GET | `/api/figures`, `/figures/{file}` | графики из `reports/figures` |
+| GET | `/api/health` | состояние сервиса |
+
+Метод по умолчанию и порог отказа берутся из `models/chatbot.json` (его сохраняет
+`src.experiments --protocol test`); пока файла нет — `tfidf_char` без порога. Индекс
+каждого метода строится при первом запросе к нему и кэшируется. Вопросы к `/api/chat`
+пишутся в `chat_log`. Переменные окружения: `API_CORS_ORIGINS` (по умолчанию
+`http://localhost:3000`), `API_WARMUP_METHODS` (методы, которые строятся при старте).
 
 ## AI-модуль: запуск
 

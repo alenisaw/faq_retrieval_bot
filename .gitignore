@@ -10,6 +10,9 @@ venv/
 backend/models/
 backend/data/processed/cache/
 
+# Журнал запусков меню (у каждого свой)
+reports/menu_log.jsonl
+
 # Кэш Hugging Face, если модели качаются внутрь проекта
 .cache/
 

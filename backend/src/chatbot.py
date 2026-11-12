@@ -52,6 +52,7 @@ class ChatResponse:
     threshold: float | None = None
     predicted_topic: str | None = None
     latency_ms: float = 0.0
+    confidence: float | None = None  # с ней сравнивается порог (у гибрида — не score топ-1)
 
     @property
     def top(self) -> Hit | None:
@@ -78,7 +79,8 @@ class ChatBot:
                  on_answer: Callable[[ChatResponse], None] | None = None) -> None:
         """
         Args:
-            threshold: порог score топ-1; None — отвечать всегда.
+            threshold: порог уверенности метода (score топ-1; у гибрида — косинус
+                нейросетевой компоненты); None — отвечать всегда.
             fitted: retriever уже обучен на этом faq_df.
             topic_classifier: если задан, выдача поднимает FAQ предсказанной темы.
             on_answer: колбэк после каждого ответа (например, запись в chat_log).
@@ -109,11 +111,10 @@ class ChatBot:
                    answer_cluster=row["answer_cluster"], topic=row.get("topic"),
                    is_dated=bool(row.get("is_dated", False)))
 
-    def search(self, query: str, k: int | None = None) -> list[Hit]:
+    def _distinct(self, ranked: list[tuple], k: int) -> list[Hit]:
         """Топ-k FAQ с разными answer_cluster (без повторов одного ответа)."""
-        k = k or self.k
         hits, seen = [], set()
-        for faq_id, score in self.retriever.search(query, k=TOP_N):
+        for faq_id, score in ranked:
             hit = self._hit(faq_id, score)
             if hit.answer_cluster in seen:
                 continue
@@ -123,13 +124,19 @@ class ChatBot:
                 break
         return hits
 
+    def search(self, query: str, k: int | None = None) -> list[Hit]:
+        """Топ-k FAQ с разными answer_cluster."""
+        return self._distinct(self.retriever.search(query, k=TOP_N), k or self.k)
+
     def answer(self, query: str, k: int | None = None) -> ChatResponse:
         query = (query or "").strip()
         if not query:
             raise ValueError("Пустой вопрос")
         start = time.perf_counter()
-        hits = self.search(query, k)
-        answered = bool(hits) and (self.threshold is None or hits[0].score >= self.threshold)
+        scores, conf = self.retriever.score_with_confidence([query])
+        hits = self._distinct(self.retriever.rank(scores[0], TOP_N), k or self.k)
+        confidence = float(conf[0]) if hits else None
+        answered = bool(hits) and (self.threshold is None or confidence >= self.threshold)
         if answered:
             message = hits[0].answer
             if hits[0].is_dated:
@@ -141,7 +148,7 @@ class ChatBot:
             topic = self.retriever.predict_topics([query])[0]
         resp = ChatResponse(query=query, answered=answered, message=message, hits=hits,
                             method=self.retriever.name, threshold=self.threshold,
-                            predicted_topic=topic,
+                            predicted_topic=topic, confidence=confidence,
                             latency_ms=1000 * (time.perf_counter() - start))
         if self.on_answer is not None:
             self.on_answer(resp)
@@ -183,7 +190,8 @@ def format_response(resp: ChatResponse, show_alternatives: bool = True) -> str:
         lines.append(f"Ответ (score {top.score:.3f}): {resp.message}")
         lines.append(f"  Похожий вопрос из FAQ: {top.question}")
     else:
-        score = f" (лучший score {resp.top.score:.3f} < порога {resp.threshold:.3f})" if resp.top else ""
+        score = (f" (уверенность {resp.confidence:.3f} < порога {resp.threshold:.3f})"
+                 if resp.confidence is not None and resp.threshold is not None else "")
         lines.append(f"{resp.message}{score}")
     # при ответе топ-1 уже показан — подсказки начинаются со второго
     suggestions = resp.hits[1:] if resp.answered else resp.hits

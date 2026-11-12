@@ -84,6 +84,26 @@ def test_hybrid_rrf_of_two_lexical_methods(faq_df):
         HybridRRFRetriever(components=("bm25",))
 
 
+def test_confidence_default_is_top_score(faq_df):
+    r = build_retriever("tfidf_char").fit(faq_df)
+    scores, conf = r.score_with_confidence(["общага есть?", "рецепт плова"])
+    assert np.allclose(conf, scores.max(axis=1))
+
+
+def test_hybrid_confidence_comes_from_component_not_rrf(faq_df):
+    r = HybridRRFRetriever(components=("tfidf_char", "bm25")).fit(faq_df)
+    queries = ["Есть ли общежитие?", "рецепт плова"]
+    fused, conf = r.score_with_confidence(queries)
+    bm25 = r.components[-1].score_matrix(queries)
+    assert np.allclose(conf, bm25.max(axis=1))
+    # RRF-score топ-1 почти не зависит от того, по теме запрос или нет —
+    # поэтому порог по нему бесполезен, а по уверенности компоненты — нет
+    assert abs(fused[0].max() - fused[1].max()) < 0.01
+    assert conf[0] > conf[1]
+    with pytest.raises(IndexError):
+        HybridRRFRetriever(components=("tfidf_char", "bm25"), confidence_component=5)
+
+
 class _StubClassifier:
     """Всегда предсказывает 'military' с вероятностью 0.9."""
     classes_ = np.array(["dormitory", "military"])
@@ -100,6 +120,9 @@ def test_topic_filter_lifts_predicted_topic(faq_df):
     assert {fid for fid, _ in hits} >= {1, 2}         # но другие FAQ не удалены
     strict = TopicFilteredRetriever(build_retriever("tfidf_char"), _StubClassifier(), min_proba=0.95)
     assert strict.fit(faq_df).search("общежитие", k=1)[0][0] in {1, 2}  # низкая уверенность -> без фильтра
+    # уверенность — у базового метода, сдвиг по теме её не раздувает
+    _, conf = r.score_with_confidence(["общежитие"])
+    assert np.isclose(conf[0], r.base.scores("общежитие").max())
 
 
 def test_tfidf_top_terms_format(faq_df):

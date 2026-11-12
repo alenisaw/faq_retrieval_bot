@@ -3,6 +3,7 @@ import pandas as pd
 import pytest
 
 from src.evaluation import (
+    annotator_agreement,
     assign_split,
     best_method,
     collapse_to_clusters,
@@ -130,6 +131,22 @@ def test_threshold_tuning_separates_oos():
     assert report["refuse_recall"] == 0.0 and report["coverage"] == 1.0
     with pytest.raises(ValueError):
         tune_threshold(pq[~pq["is_oos"]])
+
+
+def test_annotator_agreement():
+    a = pd.DataFrame({"query_id": [1, 2, 3, 3], "answer_cluster": [10, 20, 30, 31],
+                      "topic": ["dormitory", "tuition", "programs", "programs"]})
+    b = pd.DataFrame({"query_id": [1, 2, 3], "answer_cluster": [10, 21, 31],
+                      "topic": ["dormitory", "tuition", "scores_grants"]})
+    m, diff = annotator_agreement(a, b, query_ids=[1, 2, 3, 4])   # 4 — оба считают "не по теме"
+    assert m["n"] == 4
+    assert m["topic_agreement"] == 0.75
+    assert m["cluster_overlap"] == 0.75                 # у запроса 3 есть общий кластер 31
+    assert m["cluster_agreement"] == 0.5                # по наименьшему id: 30 vs 31, 20 vs 21
+    assert -1 <= m["topic_kappa"] <= 1 and -1 <= m["cluster_kappa"] <= 1
+    assert set(diff["query_id"]) == {2, 3}
+    same, none = annotator_agreement(a, a)
+    assert same["topic_kappa"] == 1.0 and same["cluster_kappa"] == 1.0 and none.empty
 
 
 def test_topic_confusion(faq_df, eval_set):

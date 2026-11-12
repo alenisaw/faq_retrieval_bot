@@ -55,7 +55,8 @@ from .retrievers import (
     build_retriever,
 )
 
-__all__ = ["run_all", "run_ablations", "hybrid_weight_search", "ablation_retrievers"]
+__all__ = ["run_all", "run_ablations", "hybrid_weight_search", "choose_hybrid_components",
+           "ablation_retrievers", "save_runs_to_db"]
 
 MRR = f"mrr@{MRR_K}"
 
@@ -93,20 +94,59 @@ def run_ablations(faq_df, protocol, queries=None, qrels=None, include_neural=Tru
     return table
 
 
+HYBRID_NEURAL_CANDIDATES = ("e5_small", "e5_small_qa")
+
+
+def choose_hybrid_components(faq_df, queries, qrels,
+                             neural_candidates=HYBRID_NEURAL_CANDIDATES) -> tuple[str, str]:
+    """Лучший лексический метод (кроме baseline) и лучший вариант e5 — по MRR на dev."""
+    lexical = [m for m in LEXICAL_METHODS if m != "rule_based" and m not in neural_candidates]
+    table, _ = run_benchmark(lexical + list(neural_candidates), faq_df, protocol="test",
+                             queries=queries, qrels=qrels, split="dev", measure_memory=False,
+                             verbose=False)
+    best_lexical = table[table["method"].isin(lexical)].iloc[0]["method"]
+    best_neural = table[table["method"].isin(neural_candidates)].iloc[0]["method"]
+    return str(best_lexical), str(best_neural)
+
+
 def hybrid_weight_search(faq_df, queries, qrels, lexical: str = "tfidf_char",
-                         grid=(0.25, 0.5, 1.0, 2.0)) -> pd.DataFrame:
-    """Вес лексической компоненты RRF относительно e5 — только на dev."""
+                         neural: str = "e5_small", grid=(0.25, 0.5, 1.0, 2.0)) -> pd.DataFrame:
+    """Вес лексической компоненты RRF относительно нейросетевой — только на dev."""
     rows = []
     for w in grid:
-        r = HybridRRFRetriever(components=(lexical, "e5_small"), weights=(w, 1.0))
+        r = HybridRRFRetriever(components=(lexical, neural), weights=(w, 1.0))
         run = evaluate(r, faq_df, queries, qrels, split="dev", measure_memory=False)
-        rows.append({"lexical": lexical, "weight_lexical": w, "weight_e5": 1.0, **run.metrics})
+        rows.append({"lexical": lexical, "neural": neural, "weight_lexical": w,
+                     "weight_neural": 1.0, **run.metrics})
     return pd.DataFrame(rows).sort_values(MRR, ascending=False, kind="stable").reset_index(drop=True)
 
 
 def _save(df: pd.DataFrame, name: str) -> None:
     config.METRICS_DIR.mkdir(parents=True, exist_ok=True)
     df.to_csv(config.METRICS_DIR / f"{name}.csv", index=False)
+
+
+def save_runs_to_db(runs: dict, queries: pd.DataFrame | None = None,
+                    qrels: pd.DataFrame | None = None) -> list[int]:
+    """Прогоны -> таблицы runs/results в faq.db (если база уже собрана пунктом 1).
+
+    Тест-набор перезаписывается в базе, только если он изменился: db.load_eval_set
+    удаляет результаты протокола A, и повторная загрузка того же набора стёрла бы
+    прошлые прогоны.
+    """
+    from . import db
+
+    if not config.DB_PATH.exists():
+        print("faq.db ещё нет — прогоны в базу не записаны (сначала пункт 1 меню).")
+        return []
+    with db.connect() as conn:
+        db.init_db(conn)
+        if queries is not None:
+            in_db = set(conn.execute("SELECT query_id, text FROM queries"))
+            in_csv = {(int(q), str(t)) for q, t in zip(queries["query_id"], queries["text"])}
+            if in_db != in_csv:
+                db.load_eval_set(conn, queries, qrels)
+        return [db.save_run(conn, run) for run in runs.values()]
 
 
 def _show(title: str, df: pd.DataFrame, cols: list[str] | None = None) -> None:
@@ -146,6 +186,9 @@ def run_all(protocol: str = "loo", include_neural: bool = True,
                                 qrels=qrels, split="test")
     save_benchmark(table, runs, tag=protocol)
     _show(f"Методы ({protocol})", table, QUALITY_COLS)
+    run_ids = save_runs_to_db(runs, queries, qrels)
+    if run_ids:
+        print(f"Прогоны записаны в faq.db: run_id {run_ids[0]}–{run_ids[-1]}")
     out["methods"] = table
 
     # 3. абляции
@@ -165,18 +208,21 @@ def run_all(protocol: str = "loo", include_neural: bool = True,
 
     # 4. гибрид и порог — подбор на dev
     if include_neural:
-        # лучший лексический метод, кроме baseline (в плане: "лучший TF-IDF + e5")
-        candidates = [m for m in LEXICAL_METHODS if m != "rule_based"]
-        lexical_best = table[table["method"].isin(candidates)].iloc[0]["method"]
-        weights = hybrid_weight_search(faq_df, queries, qrels, lexical=lexical_best)
+        # Компоненты и веса гибрида выбираются только на dev: выбор по test-таблице
+        # выше был бы подгонкой под тестовые запросы.
+        lexical_best, neural_best = choose_hybrid_components(faq_df, queries, qrels)
+        weights = hybrid_weight_search(faq_df, queries, qrels, lexical=lexical_best,
+                                       neural=neural_best)
         _save(weights, "hybrid_weights_dev")
-        _show("Веса гибрида (dev)", weights, ["lexical", "weight_lexical", MRR, "p@1"])
+        _show("Компоненты и веса гибрида (dev)", weights,
+              ["lexical", "neural", "weight_lexical", MRR, "p@1"])
         out["hybrid_weights"] = weights
         w = float(weights.iloc[0]["weight_lexical"])
-        tuned = HybridRRFRetriever(components=(lexical_best, "e5_small"), weights=(w, 1.0))
+        tuned = HybridRRFRetriever(components=(lexical_best, neural_best), weights=(w, 1.0))
         tuned.name = "hybrid_rrf_tuned"
         run = evaluate(tuned, faq_df, queries, qrels, split="test", measure_memory=False)
         runs[tuned.name] = run
+        save_runs_to_db({tuned.name: run}, queries, qrels)
         table = pd.concat([table, pd.DataFrame([{"method": tuned.name, **run.metrics}])],
                           ignore_index=True).sort_values(MRR, ascending=False, kind="stable")
         save_benchmark(table, runs, tag=protocol)

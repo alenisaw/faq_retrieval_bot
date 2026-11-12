@@ -27,11 +27,16 @@ METHODS: dict[str, tuple[type[BaseRetriever], dict]] = {
     "minilm": (EmbeddingRetriever, {"model_name": MINILM}),                          # 4
     "hybrid_rrf": (HybridRRFRetriever, {"components": ("tfidf_char", "e5_small")}),  # 5
     "bm25": (BM25Retriever, {"mode": "lemma"}),                                      # доп.
+    # Индекс "вопрос + ответ": в абляциях протокола B (только FAQ, без тест-набора)
+    # он улучшил и char TF-IDF, и e5 — поэтому участвует в финальном сравнении.
+    "tfidf_char_qa": (TfidfCharRetriever, {"index_field": "question_answer"}),
+    "e5_small_qa": (EmbeddingRetriever, {"model_name": E5_SMALL, "index_field": "question_answer"}),
 }
 
 # Методы без нейросетей: строятся за секунды, не требуют скачивания моделей.
-LEXICAL_METHODS = ("rule_based", "bow", "tfidf_word_lemma", "tfidf_word_stem", "tfidf_char", "bm25")
-NEURAL_METHODS = ("e5_small", "minilm", "hybrid_rrf")
+LEXICAL_METHODS = ("rule_based", "bow", "tfidf_word_lemma", "tfidf_word_stem", "tfidf_char",
+                   "bm25", "tfidf_char_qa")
+NEURAL_METHODS = ("e5_small", "minilm", "hybrid_rrf", "e5_small_qa")
 
 
 def build_retriever(name: str, **overrides) -> BaseRetriever:

@@ -18,6 +18,12 @@ import pandas as pd
 INDEX_FIELDS = ("question", "question_answer")
 
 
+def _row_max(scores: np.ndarray) -> np.ndarray:
+    """Максимум по строке среди конечных значений (-inf, если строка пуста)."""
+    finite = np.where(np.isfinite(scores), scores, -np.inf)
+    return finite.max(axis=1) if finite.size else np.full(len(scores), -np.inf)
+
+
 class BaseRetriever(ABC):
     """fit(faq_df) / search(query, k) -> [(faq_id, score)]."""
 
@@ -71,6 +77,18 @@ class BaseRetriever(ABC):
 
     def scores(self, query: str) -> np.ndarray:
         return self.score_matrix([query])[0]
+
+    def score_with_confidence(self, queries: Sequence[str],
+                              mask: np.ndarray | None = None) -> tuple[np.ndarray, np.ndarray]:
+        """Score документов и уверенность для порога отказа, за один проход.
+
+        Уверенность — величина, сравнимая между запросами: по ней бот решает,
+        отвечать или отказать. Для большинства методов это score топ-1.
+        Гибрид RRF и фильтр по теме переопределяют её: их score отражает
+        только порядок документов, а не абсолютную релевантность.
+        """
+        scores = self.score_matrix(queries, mask)
+        return scores, _row_max(scores)
 
     def search(self, query: str, k: int = 5) -> list[tuple[Any, float]]:
         """Топ-k документов: [(faq_id, score), ...] по убыванию score."""

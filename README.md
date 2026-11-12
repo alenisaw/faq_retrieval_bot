@@ -60,7 +60,7 @@ backend/
 ├── data/raw/                 # исходный CSV и его копия faq_raw.parquet
 ├── data/processed/           # faq_clean.parquet, faq.db, cleaning_log.json,
 │                             # topic_review.csv, cluster_review.csv, cache/ (эмбеддинги)
-├── eval/                     # test_queries.csv, qrels.csv
+├── eval/                     # test_queries.csv, qrels.csv, GUIDELINES.md, drafts/, reviews/
 ├── sql/
 │   ├── schema.sql            # 11 таблиц + 2 представления
 │   └── queries.sql           # 11 именованных SQL-отчётов
@@ -77,6 +77,7 @@ backend/
 │   ├── evaluation.py         # метрики, протоколы A и B, ресурсы, порог, confusion matrix
 │   ├── classifier.py         # классификатор тем: Dummy / TF-IDF+LR / e5+LR
 │   ├── experiments.py        # все эксперименты AI-модуля одним запуском
+│   ├── annotate.py           # разметка тест-набора, перекрёстная проверка, kappa, заморозка
 │   ├── chatbot.py            # чат-бот поверх любого метода
 │   └── eda.py                # EDA: графики в reports/figures, сводка eda_summary.json
 ├── tests/
@@ -227,6 +228,23 @@ python -m src.chatbot --method e5_small --ask "общага есть?"
 python -m pytest
 ```
 
+Прогоны `src.experiments` пишутся в `reports/metrics/` и в таблицы `runs`/`results` базы `faq.db`.
+
+### Тестовый набор (протокол A)
+
+Правила — [backend/eval/GUIDELINES.md](backend/eval/GUIDELINES.md). Всё делается через
+`src.annotate`, файлы руками не правятся:
+
+```bash
+python -m src.annotate --author ayan                    # 1. каждый размечает ~60 + 10 своих запросов
+python -m src.annotate --import eval/drafts/<файл>.csv  #    или добавляет проверенный черновик
+python -m src.annotate --author ayan --review alen      # 2. независимая разметка чужих запросов
+python -m src.annotate --agreement eval/reviews/qrels_review_ayan_on_alen.csv   # Cohen's kappa
+python -m src.annotate --check                          # 3. статистика по авторам и темам
+python -m src.annotate --freeze                         # 4. один раз: dev 30% / test 70%
+python -m src.experiments --protocol test               # 5. финальные цифры и выбор метода для бота
+```
+
 Методы (`src/retrievers/__init__.py`, реестр `METHODS`):
 
 | № | Имя | Метод |
@@ -254,6 +272,9 @@ python -m pytest
 - пункт 4: `run_benchmark(...)` или `experiments.run_all("test")`; confusion matrix —
   `topic_confusion` + `plot_confusion_matrix`;
 - пункт 5: `ChatBot.from_saved(faq_df)` и `chat_loop(bot)` либо `bot.answer(text)`.
+
+Пункт 4 в варианте `experiments` и `src.experiments` сами пишут прогоны в `faq.db`
+(`experiments.save_runs_to_db`); тест-набор перезаписывается в базе, только если он изменился.
 
 **БД (`db.py`).** `RunResult.run_record()` → строка таблицы `runs`, `RunResult.results` →
 таблица `results` (`query_id, rank, faq_id, score, latency_ms`); `TfidfWordRetriever.top_terms()`

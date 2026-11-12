@@ -28,6 +28,8 @@ METHOD_DESCRIPTIONS = {
     "minilm": "эмбеддинги paraphrase-multilingual-MiniLM-L12-v2",
     "hybrid_rrf": "Reciprocal Rank Fusion: tfidf_char + e5_small",
     "bm25": "Okapi BM25 по леммам",
+    "tfidf_char_qa": "TF-IDF по символьным n-граммам, индекс: вопрос + ответ",
+    "e5_small_qa": "эмбеддинги multilingual-e5-small, индекс: вопрос + ответ",
 }
 
 

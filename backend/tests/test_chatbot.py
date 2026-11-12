@@ -31,6 +31,17 @@ def test_threshold_refusal_gives_contacts(faq_df):
     assert "Похожие вопросы" in text and "1." in text
 
 
+def test_hybrid_bot_refuses_by_component_confidence(faq_df):
+    from src.retrievers import HybridRRFRetriever
+
+    bot = ChatBot(HybridRRFRetriever(components=("tfidf_char", "bm25")), faq_df, threshold=1.0)
+    ok, oos = bot.answer("Есть ли общежитие?"), bot.answer("рецепт плова")
+    assert ok.answered and ok.confidence >= 1.0      # BM25 у хорошего запроса выше порога
+    assert not oos.answered and oos.confidence < 1.0
+    assert ok.top.score < 0.1                        # а сам RRF-score мал у обоих
+    assert "уверенность" in format_response(oos)
+
+
 def test_dated_answer_gets_note(faq_df):
     bot = ChatBot(build_retriever("tfidf_word_lemma"), faq_df)
     resp = bot.answer("Сколько стоит проживание в общежитии?")

@@ -23,7 +23,7 @@ from typing import Callable, Sequence
 import pandas as pd
 
 from . import config
-from .evaluation import annotator_agreement, assign_split, load_faq, validate_eval_set
+from .evaluation import annotator_agreement, assign_split, load_faq, read_csv_any, validate_eval_set
 from .preprocessing import normalize
 from .retrievers import BaseRetriever, build_retriever
 
@@ -40,8 +40,8 @@ def read_eval_files(queries_path: str | Path | None = None,
     """Текущий набор; если файлов ещё нет — пустые таблицы нужного формата."""
     qp = Path(queries_path or config.TEST_QUERIES_PATH)
     rp = Path(qrels_path or config.QRELS_PATH)
-    queries = pd.read_csv(qp) if qp.exists() else pd.DataFrame(columns=QUERY_COLS)
-    qrels = pd.read_csv(rp) if rp.exists() else pd.DataFrame(columns=QREL_COLS)
+    queries = read_csv_any(qp) if qp.exists() else pd.DataFrame(columns=QUERY_COLS)
+    qrels = read_csv_any(rp) if rp.exists() else pd.DataFrame(columns=QREL_COLS)
     if "origin" not in queries:
         queries["origin"] = "manual"
     return queries, qrels
@@ -113,6 +113,16 @@ def add_query(queries: pd.DataFrame, qrels: pd.DataFrame, faq_df: pd.DataFrame, 
     return queries, qrels, qid
 
 
+def save_for_excel(path: str | Path, out_path: str | Path | None = None) -> Path:
+    """Переписать CSV так, чтобы Excel с русской локалью открыл его правильно:
+    UTF-8 с BOM (иначе Excel читает cp1251 и показывает кракозябры) и «;»
+    (иначе всё в одной колонке). Импорт читает и этот формат, и обычный."""
+    df = read_csv_any(path, dtype=str, keep_default_na=False)
+    out = Path(out_path or path)
+    df.to_csv(out, sep=";", index=False, encoding="utf-8-sig")
+    return out
+
+
 def _parse_clusters(value) -> list[int]:
     if pd.isna(value) or str(value).strip() == "":
         return []
@@ -125,10 +135,11 @@ def import_drafts(path: str | Path, faq_df: pd.DataFrame,
     """Добавить проверенный черновик: колонки text, author, is_oos, answer_cluster
     ("12" или "12|15"), topic, origin. Всё или ничего: при любой ошибке набор
     не меняется. Строки с reviewed=0 (если колонка есть) пропускаются."""
-    drafts = pd.read_csv(path)
+    drafts = read_csv_any(path, dtype=str, keep_default_na=False)
     if "reviewed" in drafts:
-        skipped = int((drafts["reviewed"].astype(int) == 0).sum())
-        drafts = drafts[drafts["reviewed"].astype(int) == 1]
+        reviewed = pd.to_numeric(drafts["reviewed"], errors="coerce").fillna(0).astype(int)
+        skipped = int((reviewed == 0).sum())
+        drafts = drafts[reviewed == 1]
         if skipped:
             print(f"Пропущено непроверенных строк (reviewed=0): {skipped}")
     queries, qrels = read_eval_files(queries_path, qrels_path)
@@ -137,9 +148,9 @@ def import_drafts(path: str | Path, faq_df: pd.DataFrame,
         try:
             queries, qrels, _ = add_query(
                 queries, qrels, faq_df, r["text"], r["author"], _parse_clusters(r.get("answer_cluster")),
-                r.get("topic") if isinstance(r.get("topic"), str) else None,
+                (r.get("topic") or "").strip() or None,
                 is_oos=str(r.get("is_oos", 0)).strip().lower() in {"1", "true", "да"},
-                origin=r.get("origin", "manual") if isinstance(r.get("origin"), str) else "manual")
+                origin=(r.get("origin") or "").strip() or "manual")
         except ValueError as exc:
             errors.append(f"строка {i + 2}: {exc}")
     if errors:
@@ -408,6 +419,7 @@ def main(argv: Sequence[str] | None = None) -> None:
     group.add_argument("--freeze", action="store_true", help="разметить dev/test (один раз)")
     group.add_argument("--agreement", metavar="CSV", help="kappa с разметкой второго человека")
     group.add_argument("--review", metavar="АВТОР", help="независимо разметить запросы этого автора")
+    group.add_argument("--excel", metavar="CSV", help="переписать черновик для Excel (UTF-8 с BOM, «;»)")
     parser.add_argument("--author", help="ваше имя (автор новых запросов или проверяющий)")
     parser.add_argument("--no-neural", action="store_true", help="кандидаты без e5")
     parser.add_argument("--force", action="store_true", help="для --freeze: перезаморозить")
@@ -415,6 +427,12 @@ def main(argv: Sequence[str] | None = None) -> None:
 
     if args.freeze:
         print("Split:", freeze(force=args.force).to_dict())
+        return
+    if args.excel:
+        try:
+            print(f"Готово, можно открывать в Excel: {save_for_excel(args.excel)}")
+        except PermissionError:
+            print("Файл открыт в другой программе (Excel?) — закройте его и повторите.")
         return
     faq_df = load_faq()
     if args.import_path:

@@ -78,6 +78,33 @@ def test_import_is_all_or_nothing_and_skips_unreviewed(paths, faq_df, tmp_path):
     assert len(read_eval_files()[0]) == 3                  # набор не изменился
 
 
+@pytest.mark.parametrize("sep,encoding", [(",", "utf-8"), (";", "utf-8-sig"), (";", "cp1251")])
+def test_import_accepts_files_saved_by_excel(paths, faq_df, tmp_path, sep, encoding):
+    # pandas по умолчанию; Excel «CSV UTF-8»; Excel «CSV (разделители)» в русской локали
+    draft = pd.DataFrame([{"text": "общага есть?", "author": "ayan", "is_oos": "0",
+                           "answer_cluster": "10|11", "topic": "", "origin": "llm_draft",
+                           "reviewed": "1", "comment": "заметка; с точкой с запятой"}])
+    path = tmp_path / "draft.csv"
+    draft.to_csv(path, sep=sep, index=False, encoding=encoding)
+    assert import_drafts(path, faq_df) == 1
+    q, r = read_eval_files()
+    assert q.iloc[0]["text"] == "общага есть?" and sorted(r["answer_cluster"]) == [10, 11]
+
+
+def test_save_for_excel_roundtrip(tmp_path):
+    from src.annotate import save_for_excel
+    from src.evaluation import read_csv_any
+
+    src = tmp_path / "d.csv"
+    df = pd.DataFrame({"text": ["общага есть?"], "answer_cluster": ["16|599"], "comment": ["a; b, c"]})
+    df.to_csv(src, index=False)
+    save_for_excel(src)
+    raw = src.read_bytes()
+    assert raw.startswith(b"\xef\xbb\xbf") and b"text;answer_cluster" in raw   # BOM и «;» для Excel
+    back = read_csv_any(src, dtype=str)
+    assert back.to_dict("records") == df.to_dict("records")
+
+
 def test_candidate_pool_has_distinct_clusters(faq_df, pool):
     view = candidate_pool(pool, faq_df, "сколько стоит общежитие")
     assert view["answer_cluster"].is_unique

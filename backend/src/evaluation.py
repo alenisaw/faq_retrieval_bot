@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import argparse
 import gc
+import io
 import json
 import sys
 import time
@@ -64,6 +65,23 @@ def load_faq(path: str | Path | None = None) -> pd.DataFrame:
     return validate_faq(pd.read_parquet(path))
 
 
+def read_csv_any(path: str | Path, **kwargs) -> pd.DataFrame:
+    """CSV в UTF-8 (с BOM или без) или cp1251, с разделителем «,» или «;».
+
+    Excel с русской локалью Windows сохраняет CSV в cp1251 и через «;»,
+    а «CSV UTF-8» — с BOM и тоже через «;». Читаем любой из вариантов,
+    чтобы файл, открытый и пересохранённый в Excel, не ломал загрузку.
+    """
+    raw = Path(path).read_bytes()
+    try:
+        text = raw.decode("utf-8-sig")
+    except UnicodeDecodeError:
+        text = raw.decode("cp1251")
+    header = text.split("\n", 1)[0]
+    sep = ";" if header.count(";") > header.count(",") else ","
+    return pd.read_csv(io.StringIO(text), sep=sep, **kwargs)
+
+
 def load_eval_set(queries_path: str | Path | None = None,
                   qrels_path: str | Path | None = None) -> tuple[pd.DataFrame, pd.DataFrame]:
     """test_queries.csv (query_id, text, author, split, is_oos) и qrels.csv."""
@@ -72,8 +90,8 @@ def load_eval_set(queries_path: str | Path | None = None,
     for p in (queries_path, qrels_path):
         if not Path(p).exists():
             raise FileNotFoundError(f"Нет файла {p}: тестовый набор ещё не собран")
-    queries = pd.read_csv(queries_path)
-    qrels = pd.read_csv(qrels_path)
+    queries = read_csv_any(queries_path)
+    qrels = read_csv_any(qrels_path)
     return validate_eval_set(queries, qrels)
 
 

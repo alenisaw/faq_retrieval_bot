@@ -17,14 +17,15 @@ services:
       - ./reports:/srv/reports                  # графики и метрики видны на хосте
     restart: unless-stopped
 
-  # Включается флагом --profile frontend, когда в репозитории появится frontend/ с Dockerfile
+  # Включается флагом --profile frontend. Адрес API вшивается в сборку Next.js (build-arg).
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      args:
+        NEXT_PUBLIC_API_URL: "http://localhost:8000"
     profiles: ["frontend"]
     ports:
       - "3000:3000"
-    environment:
-      NEXT_PUBLIC_API_URL: "http://localhost:8000"
     depends_on:
       backend:
         condition: service_healthy

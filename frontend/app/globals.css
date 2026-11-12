@@ -1,0 +1,78 @@
+@import "tailwindcss";
+@import "@fontsource-variable/onest";
+@import "@fontsource-variable/unbounded";
+
+/* Токены дизайна — см. вкладку «Роль 3 — Фронтенд» в плане проекта */
+:root {
+  --paper: #f5f7fa; /* фон страницы */
+  --sheet: #ffffff; /* лист с ответом */
+  --ink: #172033; /* текст */
+  --ink-soft: #4a5568; /* второстепенный текст */
+  --ultramarine: #2f45d8; /* действия, ссылки, фокус */
+  --marker: #ffe45c; /* только подсветка совпавших слов */
+  --line: #d5dbe5; /* границы и разделители */
+  --signal: #c2410c; /* отказ и предупреждения */
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-sheet: var(--sheet);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-ultramarine: var(--ultramarine);
+  --color-marker: var(--marker);
+  --color-line: var(--line);
+  --color-signal: var(--signal);
+  --font-sans: "Onest Variable", system-ui, sans-serif;
+  --font-display: "Unbounded Variable", "Onest Variable", system-ui, sans-serif;
+}
+
+html {
+  background: var(--paper);
+  color: var(--ink);
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--ultramarine);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Маркер: единственная анимация на сайте — проводится по слову, когда появился ответ */
+mark.hl {
+  color: inherit;
+  padding: 0 0.12em;
+  margin: 0 -0.04em;
+  border-radius: 2px;
+  background-image: linear-gradient(var(--marker), var(--marker));
+  background-repeat: no-repeat;
+  background-position: 0 85%;
+  background-size: 100% 70%;
+  background-color: transparent;
+  animation: marker-sweep 320ms ease-out both;
+}
+
+@keyframes marker-sweep {
+  from {
+    background-size: 0% 70%;
+  }
+  to {
+    background-size: 100% 70%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  mark.hl {
+    animation: none;
+  }
+  * {
+    scroll-behavior: auto !important;
+  }
+}

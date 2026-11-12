@@ -40,6 +40,7 @@ class ChatResponse(BaseModel):
     threshold: float | None = None
     predicted_topic: str | None = None
     latency_ms: float
+    confidence: float | None = None   # с ней бот сравнивает порог (у гибрида — косинус e5)
 
 
 class CompareRequest(BaseModel):

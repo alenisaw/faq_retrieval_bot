@@ -5,7 +5,8 @@
 2. Score документа = Jaccard(леммы запроса, леммы вопроса FAQ),
    плюс 1.0, если тема документа совпала с темой запроса. Поэтому FAQ
    нужной темы всегда идут выше, а внутри темы порядок задаёт Jaccard.
-3. Если ни одно ключевое слово не сработало — Jaccard по всей базе.
+3. Если ни одно ключевое слово не сработало или две темы набрали поровну —
+   Jaccard по всей базе.
 
 Словарь составлен вручную по просмотру всех 608 вопросов FAQ, без
 тестовых запросов. Ключи — slug тем из config.TOPICS.
@@ -44,14 +45,14 @@ TOPIC_KEYWORDS: dict[str, dict[str, float]] = {
         "олимпиада": 2, "iqyn": 2, "айкын": 2, "icode": 2, "sat": 2, "mesc": 2, "конкурс": 1,
         "бюджет": 1, "бесплатный": 1, "бесплатно": 1,
     },
+    # Названия специальностей (Software Engineering, Cybersecurity...) сюда
+    # намеренно не входят: это сущности, а не намерение. "Проходной балл на SE"
+    # и "что изучают на SE" содержат одно название, а темы у них разные —
+    # тему задают слова "балл", "предмет", "изучать", "кем стать".
     "programs": {
-        "специальность": 2, "бакалавриат": 1, "образовательный": 1, "программа": 1,
-        "software": 1, "engineering": 1, "computer": 1, "science": 1, "cybersecurity": 1,
-        "кибербезопасность": 1, "big": 1, "data": 1, "media": 1, "journalism": 1,
-        "журналистика": 1, "management": 1, "менеджмент": 1, "entrepreneurship": 1,
-        "предпринимательство": 1, "iot": 1, "smart": 1, "умный": 1, "инженерия": 1,
+        "специальность": 1, "бакалавриат": 1, "образовательный": 1, "программа": 1,
         "стать": 1, "профессия": 1, "код": 1, "гоп": 2, "учить": 1, "изучать": 1,
-        "проходить": 1,
+        "проходить": 1, "план": 1, "навык": 1,
     },
     "tuition": {
         "стоимость": 2, "стоить": 2, "цена": 2, "оплата": 2, "оплачивать": 2,
@@ -124,14 +125,22 @@ class RuleBasedRetriever(BaseRetriever):
         return set(preprocess(text, mode="lemma", remove_stopwords=True))
 
     def predict_topic(self, query: str) -> str | None:
-        """Тема с максимальной суммой весов; None, если ни одно слово не сработало."""
+        """Тема с максимальной суммой весов.
+
+        None — если ни одно слово не сработало или две темы набрали поровну:
+        при неоднозначности лучше искать по всей базе, чем угадать тему и
+        утопить правильный ответ под FAQ чужой темы.
+        """
         votes: dict[str, float] = defaultdict(float)
         for lemma in self._lemmas(query):
             for topic, weight in self.keyword_topics.get(lemma, ()):
                 votes[topic] += weight
         if not votes:
             return None
-        return max(sorted(votes), key=votes.__getitem__)  # sorted: стабильный выбор при ничьей
+        ranked = sorted(votes.values(), reverse=True)
+        if len(ranked) > 1 and ranked[0] == ranked[1]:
+            return None
+        return max(votes, key=votes.__getitem__)
 
     def _fit(self, docs: list[str], faq_df: pd.DataFrame) -> None:
         self.doc_lemmas = [self._lemmas(d) for d in docs]

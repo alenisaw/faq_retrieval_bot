@@ -137,6 +137,61 @@ def assign_split(queries: pd.DataFrame, qrels: pd.DataFrame, dev_frac: float = 0
     return queries
 
 
+def annotator_agreement(primary: pd.DataFrame, review: pd.DataFrame,
+                        query_ids: Iterable | None = None) -> tuple[dict, pd.DataFrame]:
+    """Согласие двух разметчиков (Cohen's kappa) по теме и по gold-кластеру.
+
+    primary — qrels автора запросов, review — независимая разметка второго
+    человека (те же колонки query_id, answer_cluster, topic), сделанная ДО
+    обсуждения расхождений. "Не по теме" — запрос без строк в разметке или
+    строка с пустым answer_cluster.
+    Если у запроса несколько допустимых кластеров, для kappa берётся
+    наименьший id, а для cluster_overlap достаточно пересечения множеств.
+
+    Returns:
+        метрики (n, topic_kappa, topic_agreement, cluster_kappa,
+        cluster_agreement, cluster_overlap) и таблица расхождений.
+    """
+    from sklearn.metrics import cohen_kappa_score
+
+    if query_ids is None:
+        query_ids = sorted(set(primary["query_id"]) | set(review["query_id"]))
+    query_ids = list(query_ids)
+
+    def labels(df: pd.DataFrame):
+        valid = df.dropna(subset=["answer_cluster"])
+        clusters = valid.groupby("query_id")["answer_cluster"].apply(lambda s: set(s.astype(int)))
+        topics = (valid.drop_duplicates("query_id").set_index("query_id")["topic"]
+                  if "topic" in valid else pd.Series(dtype=object))
+        cl = [clusters.get(q, set()) for q in query_ids]
+        tp = [str(topics.get(q, "__none__")) if q in clusters.index else "__oos__" for q in query_ids]
+        return cl, tp
+
+    cl_a, tp_a = labels(primary)
+    cl_b, tp_b = labels(review)
+    prim_a = [str(min(c)) if c else "__oos__" for c in cl_a]
+    prim_b = [str(min(c)) if c else "__oos__" for c in cl_b]
+    overlap = [bool(a & b) or (not a and not b) for a, b in zip(cl_a, cl_b)]
+
+    def kappa(a, b):
+        return float(cohen_kappa_score(a, b)) if len(set(a) | set(b)) > 1 else 1.0
+
+    metrics = {
+        "n": len(query_ids),
+        "topic_kappa": kappa(tp_a, tp_b),
+        "topic_agreement": float(np.mean([a == b for a, b in zip(tp_a, tp_b)])),
+        "cluster_kappa": kappa(prim_a, prim_b),
+        "cluster_agreement": float(np.mean([a == b for a, b in zip(prim_a, prim_b)])),
+        "cluster_overlap": float(np.mean(overlap)),
+    }
+    diff = pd.DataFrame({"query_id": query_ids, "topic_a": tp_a, "topic_b": tp_b,
+                         "clusters_a": ["|".join(map(str, sorted(c))) for c in cl_a],
+                         "clusters_b": ["|".join(map(str, sorted(c))) for c in cl_b],
+                         "cluster_overlap": overlap})
+    diff = diff[(diff["topic_a"] != diff["topic_b"]) | ~diff["cluster_overlap"]]
+    return metrics, diff.reset_index(drop=True)
+
+
 # --- Метрики ----------------------------------------------------------------
 
 def collapse_to_clusters(ranked_faq_ids: Iterable, faq_to_cluster: dict) -> list:
@@ -244,36 +299,43 @@ class RunResult:
                 "model_size_mb": m.get("model_size_mb")}
 
 
-def _search_each(retriever: BaseRetriever, queries: Sequence[str],
-                 mask: np.ndarray | None, top_n: int) -> tuple[list[list[tuple]], list[float]]:
-    """Каждый запрос отдельно, как в чат-боте, — чтобы замер задержки был честным."""
-    ranked, latencies = [], []
+def _search_each(retriever: BaseRetriever, queries: Sequence[str], mask: np.ndarray | None,
+                 top_n: int) -> tuple[list[list[tuple]], list[float], list[float]]:
+    """Каждый запрос отдельно, как в чат-боте, — чтобы замер задержки был честным.
+
+    Returns: выдачи, задержки (мс), уверенности для порога отказа.
+    """
+    ranked, latencies, confidences = [], [], []
     for i, q in enumerate(queries):
         row_mask = None if mask is None else mask[i:i + 1]
         start = time.perf_counter()
-        scores = retriever.score_matrix([q], row_mask)[0]
-        hits = retriever.rank(scores, top_n)
+        scores, conf = retriever.score_with_confidence([q], row_mask)
+        hits = retriever.rank(scores[0], top_n)
         latencies.append(1000 * (time.perf_counter() - start))
         ranked.append(hits)
-    return ranked, latencies
+        confidences.append(float(conf[0]))
+    return ranked, latencies, confidences
 
 
 def _per_query_table(query_ids, texts, gold_sets, gold_topics, is_oos, ranked, latencies,
-                     faq_df: pd.DataFrame, ks=KS, mrr_k=MRR_K) -> tuple[pd.DataFrame, pd.DataFrame]:
+                     faq_df: pd.DataFrame, ks=KS, mrr_k=MRR_K,
+                     confidences=None) -> tuple[pd.DataFrame, pd.DataFrame]:
     faq_to_cluster = dict(zip(faq_df["faq_id"], faq_df["answer_cluster"]))
     faq_to_topic = dict(zip(faq_df["faq_id"], faq_df["topic"])) if "topic" in faq_df else {}
     faq_to_question = dict(zip(faq_df["faq_id"], faq_df["question"]))
 
+    if confidences is None:
+        confidences = [h[0][1] if h else float("nan") for h in ranked]
     rows, result_rows = [], []
-    for qid, text, gold, gtopic, oos, hits, lat in zip(query_ids, texts, gold_sets, gold_topics,
-                                                       is_oos, ranked, latencies):
+    for qid, text, gold, gtopic, oos, hits, lat, conf in zip(query_ids, texts, gold_sets, gold_topics,
+                                                             is_oos, ranked, latencies, confidences):
         clusters = collapse_to_clusters([f for f, _ in hits], faq_to_cluster)
         top1 = hits[0] if hits else (None, float("nan"))
         row = {
             "query_id": qid, "query": text, "is_oos": bool(oos),
             "gold_clusters": "|".join(map(str, sorted(gold))) if gold else "",
             "gold_topic": gtopic,
-            "top1_faq_id": top1[0], "top1_score": top1[1],
+            "top1_faq_id": top1[0], "top1_score": top1[1], "confidence": conf,
             "top1_cluster": faq_to_cluster.get(top1[0]),
             "top1_topic": faq_to_topic.get(top1[0]),
             "top1_question": faq_to_question.get(top1[0]),
@@ -320,7 +382,8 @@ def evaluate(retriever: BaseRetriever, faq_df: pd.DataFrame, queries: pd.DataFra
     if split is not None:
         queries = queries[queries["split"] == split]
     if queries.empty:
-        raise ValueError(f"Нет запросов со split={split!r}")
+        raise ValueError(f"Нет запросов со split={split!r}. Если набор ещё не заморожен — "
+                         f"python -m src.annotate --freeze")
 
     stats = fit_with_stats(retriever, faq_df, measure_memory) if fit else {}
     gold = qrels.groupby("query_id")["answer_cluster"].apply(set).to_dict()
@@ -328,10 +391,11 @@ def evaluate(retriever: BaseRetriever, faq_df: pd.DataFrame, queries: pd.DataFra
               if "topic" in qrels else {})
     qids = queries["query_id"].tolist()
 
-    ranked, lat = _search_each(retriever, queries["text"].tolist(), None, top_n)
+    ranked, lat, conf = _search_each(retriever, queries["text"].tolist(), None, top_n)
     per_query, results = _per_query_table(
         qids, queries["text"].tolist(), [gold.get(q, set()) for q in qids],
-        [gtopic.get(q) for q in qids], queries["is_oos"].tolist(), ranked, lat, faq_df)
+        [gtopic.get(q) for q in qids], queries["is_oos"].tolist(), ranked, lat, faq_df,
+        confidences=conf)
     metrics = {**summarize(per_query), **stats}
     return RunResult(retriever.name, split or "all", retriever.params(), metrics, per_query, results)
 
@@ -365,11 +429,11 @@ def leave_one_out(retriever: BaseRetriever, faq_df: pd.DataFrame, fit: bool = Tr
     idx = [i for i, _ in rows]
     mask = np.vstack([m for _, m in rows])
     sub = faq_df.iloc[idx]
-    ranked, lat = _search_each(retriever, sub["question"].tolist(), mask, top_n)
+    ranked, lat, conf = _search_each(retriever, sub["question"].tolist(), mask, top_n)
     topics = sub["topic"].tolist() if "topic" in sub else [None] * len(sub)
     per_query, results = _per_query_table(
         sub["faq_id"].tolist(), sub["question"].tolist(), [{c} for c in sub["answer_cluster"]],
-        topics, [False] * len(sub), ranked, lat, faq_df)
+        topics, [False] * len(sub), ranked, lat, faq_df, confidences=conf)
     metrics = {**summarize(per_query), **stats}
     return RunResult(retriever.name, "loo", retriever.params(), metrics, per_query, results)
 
@@ -436,13 +500,17 @@ def save_benchmark(table: pd.DataFrame, runs: dict[str, RunResult], tag: str,
 # --- Порог отказа -----------------------------------------------------------------
 
 def threshold_report(per_query: pd.DataFrame, threshold: float) -> dict:
-    """Качество решения "отвечать / отказать" при данном пороге score топ-1.
+    """Качество решения "отвечать / отказать" при данном пороге уверенности.
+
+    Уверенность — колонка confidence (для большинства методов это score топ-1,
+    для гибрида RRF — косинус нейросетевой компоненты); в старых таблицах без
+    неё берётся top1_score.
 
     refuse_precision/recall — про запросы не по теме (их надо отклонять);
     coverage — доля запросов по теме, на которые бот ответил;
     answered_correct — доля запросов по теме, где бот ответил и топ-1 верный.
     """
-    answered = per_query["top1_score"] >= threshold
+    answered = _confidence(per_query) >= threshold
     oos = per_query["is_oos"].astype(bool)
     refused = ~answered
     tp = int((refused & oos).sum())
@@ -456,6 +524,11 @@ def threshold_report(per_query: pd.DataFrame, threshold: float) -> dict:
         "answered_correct": float((answered & correct)[in_domain].mean()) if in_domain.any() else float("nan"),
         "balanced_accuracy": _balanced_accuracy(answered, oos),
     }
+
+
+def _confidence(per_query: pd.DataFrame) -> pd.Series:
+    col = "confidence" if "confidence" in per_query else "top1_score"
+    return per_query[col].astype(float)
 
 
 def _balanced_accuracy(answered: pd.Series, oos: pd.Series) -> float:
@@ -476,7 +549,7 @@ def tune_threshold(per_query_dev: pd.DataFrame) -> dict:
     """
     if not per_query_dev["is_oos"].any():
         raise ValueError("Для подбора порога нужны dev-запросы не по теме (is_oos=1)")
-    scores = np.unique(per_query_dev["top1_score"].dropna().to_numpy())
+    scores = np.unique(_confidence(per_query_dev).dropna().to_numpy())
     candidates = np.concatenate([[scores.min() - 1e-9], scores])
     best = max((threshold_report(per_query_dev, t) for t in candidates),
                key=lambda r: (r["balanced_accuracy"], -r["threshold"]))

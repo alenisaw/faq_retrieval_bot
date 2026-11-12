@@ -77,12 +77,14 @@ backend/
 │   ├── evaluation.py         # метрики, протоколы A и B, ресурсы, порог, confusion matrix
 │   ├── classifier.py         # классификатор тем: Dummy / TF-IDF+LR / e5+LR
 │   ├── experiments.py        # все эксперименты AI-модуля одним запуском
-│   └── chatbot.py            # чат-бот поверх любого метода
+│   ├── chatbot.py            # чат-бот поверх любого метода
+│   └── eda.py                # EDA: графики в reports/figures, сводка eda_summary.json
 ├── tests/
 ├── main.py                   # консольное меню
 ├── Dockerfile
 └── requirements.txt
 reports/                      # metrics/, figures/, sql/
+frontend/                     # веб-интерфейс на Next.js (frontend/README.md)
 docker-compose.yml
 ```
 
@@ -180,6 +182,29 @@ with db.connect() as conn:
 каждого метода строится при первом запросе к нему и кэшируется. Вопросы к `/api/chat`
 пишутся в `chat_log`. Переменные окружения: `API_CORS_ORIGINS` (по умолчанию
 `http://localhost:3000`), `API_WARMUP_METHODS` (методы, которые строятся при старте).
+
+## Фронтенд
+
+Next.js 16 + TypeScript + Tailwind в папке `frontend/`, подробности — `frontend/README.md`.
+
+```bash
+cd frontend && npm install && npm run dev      # http://localhost:3000 (API должен работать на :8000)
+```
+
+| Страница | Что на ней |
+|---|---|
+| `/` | вопрос → ответ с маркером на совпавших словах, тема, совпадение, метод; похожие ответы; темы базы |
+| `/compare` | один вопрос всеми методами сразу, одинаковые ответы подсвечены одним цветом |
+| `/insights` | метрики методов, SQL-отчёты, графики EDA |
+
+Консольное меню остаётся обязательным интерфейсом по требованию 7; веб-интерфейс — расширение поверх того же API.
+
+## EDA
+
+`python -m src.eda` (или пункт 2 меню) строит графики в `reports/figures/` и сводку `reports/eda_summary.json`:
+темы, длины текстов с выбросами по IQR, частые слова до и после стоп-слов, биграммы и триграммы,
+облака слов по темам, размер словаря raw / stem / lemma (`reports/metrics/eda_vocab.csv`), размеры
+кластеров ответов. Графики видны на странице `/insights`.
 
 ## AI-модуль: запуск
 

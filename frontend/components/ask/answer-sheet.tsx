@@ -1,11 +1,20 @@
 import { Highlighted } from "@/components/highlighted";
 import { ScoreBar } from "@/components/ui/score-bar";
 import type { ChatResponse } from "@/lib/api";
-import { formatMs, methodLabel } from "@/lib/utils";
+import { confidence } from "@/lib/confidence";
+import { cn, formatMs, methodLabel } from "@/lib/utils";
+
+const DOT: Record<string, string> = {
+  clear: "bg-ultramarine",
+  single: "bg-ultramarine",
+  likely: "bg-ultramarine/50",
+  close: "bg-signal",
+};
 
 export function AnswerSheet({ resp, stems }: { resp: ChatResponse; stems: string[] }) {
   const [best, ...rest] = resp.hits;
   const scale = Math.max(1, best?.score ?? 1); // BM25 и правила дают score > 1
+  const conf = confidence(resp.hits);
 
   if (!resp.answered || !best) {
     return (
@@ -20,7 +29,13 @@ export function AnswerSheet({ resp, stems }: { resp: ChatResponse; stems: string
   return (
     <section aria-live="polite" aria-label="Ответ" className="space-y-6">
       <article className="rounded-md border border-line bg-sheet p-6 shadow-[0_1px_0_rgba(23,32,51,0.04)] sm:p-8">
-        <p className="max-w-[68ch] whitespace-pre-line text-[17px] leading-[1.65]">
+        {conf.text && (
+          <p className={cn("mb-4 flex items-center gap-2 text-sm", conf.level === "close" ? "text-signal" : "text-ink-soft")}>
+            <span aria-hidden className={cn("size-2 rounded-full", DOT[conf.level])} />
+            {conf.text}
+          </p>
+        )}
+        <p className="max-w-[68ch] whitespace-pre-line text-[18px] leading-[1.65]">
           <Highlighted text={best.answer} stems={stems} />
         </p>
 
@@ -52,7 +67,9 @@ export function AnswerSheet({ resp, stems }: { resp: ChatResponse; stems: string
             <dd className="tabular-nums">{formatMs(resp.latency_ms)}</dd>
           </div>
         </dl>
-        <p className="mt-3 text-sm text-ink-soft">Найдено по вопросу из базы: «{best.question}»</p>
+        <p className="mt-3 text-sm text-ink-soft">
+          Найдено по вопросу из базы: «<Highlighted text={best.question} stems={stems} />»
+        </p>
       </article>
 
       {rest.length > 0 && (

@@ -57,6 +57,24 @@ export function CompareView() {
 
   const describe = (name: string) => methods.find((m) => m.name === name)?.description;
 
+  // Итог: какой ответ чаще всего стоит первым и кто с этим не согласен
+  const consensus = useMemo(() => {
+    const tops = (data?.results ?? [])
+      .filter((r) => r.hits[0])
+      .map((r) => ({ method: r.method, key: r.hits[0].answer_cluster ?? -r.hits[0].faq_id, q: r.hits[0].question }));
+    if (!tops.length) return null;
+    const counts = new Map<number, number>();
+    tops.forEach((t) => counts.set(t.key, (counts.get(t.key) ?? 0) + 1));
+    const [key, n] = [...counts.entries()].sort((a, b) => b[1] - a[1])[0];
+    return {
+      n,
+      total: tops.length,
+      question: tops.find((t) => t.key === key)!.q,
+      tint: tints.get(key),
+      dissent: tops.filter((t) => t.key !== key).map((t) => methodLabel(t.method)),
+    };
+  }, [data, tints]);
+
   return (
     <div>
       <h1 className="font-display text-[28px] font-semibold leading-[1.15] tracking-tight sm:text-[36px]">
@@ -119,7 +137,27 @@ export function CompareView() {
 
         {!loading && data && (
           <>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" aria-live="polite">
+            {consensus && (
+              <div className="mb-8" aria-live="polite">
+                <p className="font-display text-xl font-semibold tracking-tight sm:text-2xl">
+                  {consensus.n === consensus.total
+                    ? `Все ${consensus.total} методов первым ставят один ответ`
+                    : `${consensus.n} из ${consensus.total} методов первым ставят один ответ`}
+                </p>
+                <p className="mt-2 max-w-[68ch]">
+                  <span
+                    className="rounded px-1.5 py-0.5"
+                    style={consensus.tint ? { background: consensus.tint } : undefined}
+                  >
+                    «{consensus.question}»
+                  </span>
+                </p>
+                {consensus.dissent.length > 0 && (
+                  <p className="mt-2 text-sm text-ink-soft">Не согласны: {consensus.dissent.join(", ")}.</p>
+                )}
+              </div>
+            )}
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {data.results.map((r) => (
                 <section key={r.method} className="rounded-md border border-line bg-sheet p-5">
                   <header className="flex items-baseline justify-between gap-3">

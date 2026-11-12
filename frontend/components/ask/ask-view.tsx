@@ -31,6 +31,20 @@ export function AskView() {
       .methods()
       .then(setMethods)
       .catch(() => setMethods([]));
+    // ссылка вида /?q=общага есть? сразу задаёт вопрос — удобно для демо и отчёта
+    const q = new URLSearchParams(window.location.search).get("q");
+    if (q) void Promise.resolve().then(() => search(q));
+    // «/» ставит курсор в поиск, как на GitHub
+    const onKey = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement | null)?.tagName;
+      if (e.key === "/" && tag !== "INPUT" && tag !== "TEXTAREA" && tag !== "SELECT") {
+        e.preventDefault();
+        inputRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- только при первом рендере
   }, []);
 
   async function search(text: string) {
@@ -46,6 +60,7 @@ export function AskView() {
       const r = await api.chat(q, method || null, 3);
       setResp(r);
       setAsked(q);
+      window.history.replaceState(null, "", `?q=${encodeURIComponent(q)}`);
     } catch (e) {
       setResp(null);
       setError(e instanceof ApiError ? e.message : "Не получилось получить ответ.");
@@ -81,9 +96,10 @@ export function AskView() {
             maxLength={500}
             autoComplete="off"
             placeholder="Например: есть ли общежитие?"
-            className="h-14 w-full rounded-[10px] border border-line bg-sheet px-4 text-lg placeholder:text-ink-soft/70 focus:border-ultramarine focus:outline-none"
+            onKeyDown={(e) => e.key === "Escape" && setQuery("")}
+            className="h-16 w-full rounded-xl border-2 border-line bg-sheet px-5 font-display text-[19px] font-medium tracking-tight placeholder:font-sans placeholder:text-[18px] placeholder:font-normal placeholder:tracking-normal placeholder:text-ink-soft/60 focus:border-ultramarine focus:outline-none sm:text-[22px]"
           />
-          <Button type="submit" disabled={loading} className="h-14 px-6 text-base">
+          <Button type="submit" disabled={loading} className="h-16 rounded-xl px-7 text-base">
             {loading ? "Ищем…" : "Найти ответ"}
           </Button>
         </div>

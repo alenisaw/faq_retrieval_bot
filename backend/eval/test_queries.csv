@@ -1,0 +1,212 @@
+query_id,text,author,split,is_oos,origin
+1,расскажи про аиту что это за вуз,ayan,test,0,llm_draft
+2,кто основал универ,ayan,test,0,llm_draft
+3,миссия у аиту какая,ayan,dev,0,llm_draft
+4,есть 3д тур по универу?,ayan,test,0,llm_draft
+5,какие научные центры есть в аиту,ayan,test,0,llm_draft
+6,я из регионов хочу к вам поступить с чего начать,ayan,test,0,llm_draft
+7,какие доки нужны для поступления,ayan,test,0,llm_draft
+8,аэт это что вообще,ayan,test,0,llm_draft
+9,можно ли поступить без аэт только по ент,ayan,test,0,llm_draft
+10,когда результаты аэт выходят,ayan,test,0,llm_draft
+11,что надо сделать чтобы попасть в колледж аиту,ayan,test,0,llm_draft
+12,в какие числа проходит творч экзамен,ayan,test,0,llm_draft
+13,список тем эссе для digital journalism,ayan,test,0,llm_draft
+14,как проходит творч экзамен на журналистику,ayan,dev,0,llm_draft
+15,творческий можно сдать на казахском?,ayan,test,0,llm_draft
+16,где регаться на творческий,ayan,dev,0,llm_draft
+17,номер приемки,ayan,dev,0,llm_draft
+18,адрес аиту,ayan,test,0,llm_draft
+19,до скольки работает приемная комиссия,ayan,dev,0,llm_draft
+20,универ открыт в выходные?,ayan,dev,0,llm_draft
+21,кабинет 1с на каком этаже,ayan,test,0,llm_draft
+22,общага есть?,ayan,dev,0,llm_draft
+23,skolko stoit obshaga v mesyac,ayan,dev,0,llm_draft
+24,как получить место в общаге,ayan,dev,0,llm_draft
+25,кто в приоритете на общежитие,ayan,test,0,llm_draft
+26,какие комнаты в общежитии,ayan,test,0,llm_draft
+27,есть военка?,ayan,test,0,llm_draft
+28,что надо пройти чтобы взяли на военку,ayan,dev,0,llm_draft
+29,где проходить медкомиссию для военки,ayan,dev,0,llm_draft
+30,что будет если не сдам физру на военной кафедре,ayan,test,0,llm_draft
+31,военка бесплатная?,ayan,test,0,llm_draft
+32,сколько учиться в магистратуре,ayan,dev,0,llm_draft
+33,хочу в магу какие направления есть,ayan,test,0,llm_draft
+34,доки для магистратуры,ayan,test,0,llm_draft
+35,магистратура на английском или на русском?,ayan,test,0,llm_draft
+36,что изучают в маге по аналитике данных,ayan,test,0,llm_draft
+37,кем работать после software engineering,ayan,test,0,llm_draft
+38,что изучают на кибербезе,ayan,dev,0,llm_draft
+39,на какие направления можно поступить на бакалавриат,ayan,test,0,llm_draft
+40,к какой гоп относится компьютер саенс,ayan,dev,0,llm_draft
+41,что учат на big data,ayan,test,0,llm_draft
+42,проходной балл на se,ayan,test,0,llm_draft
+43,сколько баллов надо на медиа технолоджис,ayan,dev,0,llm_draft
+44,какие предметы сдавать на кибербезопасность,ayan,test,0,llm_draft
+45,что дает айкын если выиграть,ayan,dev,0,llm_draft
+46,сколько надо набрать на ент чтобы пройти на грант,ayan,test,0,llm_draft
+47,в аиту можно заниматься спортом?,ayan,test,0,llm_draft
+48,можно поехать по обмену за границу,ayan,test,0,llm_draft
+49,коворкинг в универе для чего нужен,ayan,test,0,llm_draft
+50,помогают ли с работой после выпуска,ayan,test,0,llm_draft
+51,стажировки есть?,ayan,test,0,llm_draft
+52,учеба на английском или можно на русском?,ayan,test,0,llm_draft
+53,за сколько лет можно закончить бакалавр,ayan,test,0,llm_draft
+54,сколько длится триместр,ayan,dev,0,llm_draft
+55,как считается оценка за предмет,ayan,test,0,llm_draft
+56,где взять справку что я студент,ayan,test,0,llm_draft
+57,скок стоит учеба,ayan,test,0,llm_draft
+58,есть ли скидки на платном,ayan,dev,0,llm_draft
+59,стипендия на ректорском гранте дают?,ayan,test,0,llm_draft
+60,как оплачивать платное обучение,ayan,test,0,llm_draft
+61,скидки для магистрантов,ayan,dev,0,llm_draft
+62,какая погода в астане завтра,ayan,test,1,llm_draft
+63,сколько стоит учеба в назарбаев университете,ayan,test,1,llm_draft
+64,как приготовить бешбармак,ayan,test,1,llm_draft
+65,кто выиграл лигу чемпионов,ayan,test,1,llm_draft
+66,посоветуй ноутбук для программирования,ayan,test,1,llm_draft
+67,как доехать до хан шатыра,ayan,dev,1,llm_draft
+68,курс доллара сегодня,ayan,test,1,llm_draft
+69,как написать резюме,ayan,dev,1,llm_draft
+70,переведи hello на казахский,ayan,test,1,llm_draft
+71,какой фильм посмотреть вечером,ayan,test,1,llm_draft
+72,репутация аиту у работодателей норм?,akerke,test,0,llm_draft
+73,у вас есть свой научный журнал,akerke,dev,0,llm_draft
+74,в чем вообще видение вуза,akerke,test,0,llm_draft
+75,чем аиту лучше других универов,akerke,test,0,llm_draft
+76,что за павильон рядом с универом куда туристы ходят,akerke,dev,0,llm_draft
+77,какие доки нужны чтобы поступить,akerke,dev,0,llm_draft
+78,фаундейшн это че такое,akerke,dev,0,llm_draft
+79,"как я узнаю когда у меня экзамен, смс придет?",akerke,dev,0,llm_draft
+80,скок платить за второй модуль аэт в юстади,akerke,test,0,llm_draft
+81,как зарегаться на аэт,akerke,test,0,llm_draft
+82,проходной на computer science скок баллов,akerke,dev,0,llm_draft
+83,с sat можно поступить к вам?,akerke,test,0,llm_draft
+84,что сдавать на биг дату,akerke,test,0,llm_draft
+85,предметы ент на инфобез,akerke,dev,0,llm_draft
+86,до какого числа подают на гос грант,akerke,test,0,llm_draft
+87,что изучают на компьютерных науках по учебному плану,akerke,test,0,llm_draft
+88,кем работать после биг даты,akerke,dev,0,llm_draft
+89,какие специальности вообще есть в аиту,akerke,test,0,llm_draft
+90,что проходят на медиа технологиях,akerke,test,0,llm_draft
+91,код специальности программная инженерия,akerke,test,0,llm_draft
+92,скок стоит учеба в год,akerke,test,0,llm_draft
+93,скидка 30 процентов кому дают,akerke,test,0,llm_draft
+94,стипендия у вас есть?,akerke,test,0,llm_draft
+95,курсы английского сколько стоят,akerke,dev,0,llm_draft
+96,какие доки нести на скидку бакалавриат,akerke,test,0,llm_draft
+97,общага далеко от универа?,akerke,test,0,llm_draft
+98,проживание в общаге цена в месяц,akerke,test,0,llm_draft
+99,как оплатить общагу через хоумбанк,akerke,test,0,llm_draft
+100,"что есть в общежитии, кухня, комнаты отдыха?",akerke,test,0,llm_draft
+101,договор на общагу как заключить,akerke,test,0,llm_draft
+102,как поступить на цифровую журналистику,akerke,test,0,llm_draft
+103,темы творческого проекта какие,akerke,test,0,llm_draft
+104,в каком стиле писать сочинение на творческом,akerke,test,0,llm_draft
+105,до скольки принимают заявки на творческий,akerke,test,0,llm_draft
+106,творческий экзамен из чего состоит,akerke,test,0,llm_draft
+107,военка есть в аиту?,akerke,test,0,llm_draft
+108,какие анализы сдавать на военную кафедру,akerke,test,0,llm_draft
+109,не прошел медкомиссию на военку что дальше,akerke,test,0,llm_draft
+110,сержанты запаса какие специальности там,akerke,dev,0,llm_draft
+111,психологический тест на военке что проверяют,akerke,test,0,llm_draft
+112,что нужно подать в магистратуру из документов,akerke,dev,0,llm_draft
+113,на каком языке учат в магистратуре,akerke,test,0,llm_draft
+114,профильные предметы computational sciences магистратура,akerke,test,0,llm_draft
+115,докторантура 8D06101 что за программа,akerke,test,0,llm_draft
+116,какие магистерские программы есть,akerke,test,0,llm_draft
+117,скок лет учиться на бакалавре,akerke,test,0,llm_draft
+118,на каком языке преподают,akerke,dev,0,llm_draft
+119,мудл для чего нужен,akerke,dev,0,llm_draft
+120,справку с места учебы за сколько дней делают,akerke,test,0,llm_draft
+121,можно учиться дистанционно?,akerke,test,0,llm_draft
+122,номер приемной комиссии,akerke,test,0,llm_draft
+123,адрес универа,akerke,test,0,llm_draft
+124,во сколько работает универ,akerke,test,0,llm_draft
+125,"где пообщаться со студентами, есть телеграм чат?",akerke,test,0,llm_draft
+126,почта аиту для вопросов,akerke,test,0,llm_draft
+127,практику в крупных айти компаниях можно пройти?,akerke,test,0,llm_draft
+128,есть стартап сообщество?,akerke,dev,0,llm_draft
+129,центр карьеры помогает с работой?,akerke,dev,0,llm_draft
+130,иностранцы могут у вас учиться,akerke,test,0,llm_draft
+131,сертификаты от айти компаний дают?,akerke,test,0,llm_draft
+132,будет ли снег на выходных,akerke,test,1,llm_draft
+133,как поступить в назарбаев университет,akerke,test,1,llm_draft
+134,рецепт бешбармака,akerke,test,1,llm_draft
+135,где купить айфон дешевле,akerke,test,1,llm_draft
+136,сколько стоит билет на поезд алматы астана,akerke,test,1,llm_draft
+137,кто выиграл чемпионат мира по футболу,akerke,test,1,llm_draft
+138,сколько сейчас стоит евро в тенге,akerke,dev,1,llm_draft
+139,посоветуй сериал на вечер,akerke,test,1,llm_draft
+140,как оформить загранпаспорт,akerke,test,1,llm_draft
+141,как написать резюме на английском,akerke,test,1,llm_draft
+142,"наукой какой занимаетесь, исследовательские проекты есть",alen,dev,0,llm_draft
+143,студентов берут в научные проекты?,alen,test,0,llm_draft
+144,какой у вас кампус что там есть,alen,test,0,llm_draft
+145,стратегия развития универа какая,alen,test,0,llm_draft
+146,что за мфца астана,alen,test,0,llm_draft
+147,аэт в астане когда будет,alen,test,0,llm_draft
+148,чем готовиться к первому модулю аэт по англу,alen,dev,0,llm_draft
+149,по шагам как поступить на бакалавриат,alen,dev,0,llm_draft
+150,"у меня есть ielts, англ модуль аэт можно не сдавать?",alen,test,0,llm_draft
+151,после колледжа аиту можно пойти в вуз?,alen,test,0,llm_draft
+152,менеджмент и контроль какие предметы ент,alen,test,0,llm_draft
+153,айти менеджмент профильные предметы,alen,test,0,llm_draft
+154,что даст победа в iqyn,alen,test,0,llm_draft
+155,есть минимальный балл на грант?,alen,test,0,llm_draft
+156,как лучше готовиться к ент советы,alen,test,0,llm_draft
+157,smart technologies что там учат,alen,test,0,llm_draft
+158,кем работать после цифровой журналистики,alen,test,0,llm_draft
+159,код айти предпринимательства,alen,test,0,llm_draft
+160,план обучения на мат и вычислительных науках,alen,dev,0,llm_draft
+161,что будет уметь выпускник software engineering,alen,test,0,llm_draft
+162,скидки для магистрантов на платке,alen,test,0,llm_draft
+163,gpa 3.2 скидка как получить,alen,test,0,llm_draft
+164,призер олимпиады скидка условия,alen,test,0,llm_draft
+165,что будет если перестал подходить под скидку,alen,test,0,llm_draft
+166,на ректорском гранте стипендию платят?,alen,dev,0,llm_draft
+167,сколько общаг у аиту,alen,test,0,llm_draft
+168,общежитие для девочек есть,alen,dev,0,llm_draft
+169,чем можно оплатить общежитие,alen,test,0,llm_draft
+170,в общаге мебель и интернет есть?,alen,test,0,llm_draft
+171,что делать после того как дали место в общаге,alen,test,0,llm_draft
+172,на каком языке можно сдать творческий,alen,test,0,llm_draft
+173,темы сочинений на творческом экзамене,alen,test,0,llm_draft
+174,творч экзамен этапы,alen,dev,0,llm_draft
+175,дедлайн заявления на творческий экзамен,alen,dev,0,llm_draft
+176,проект на творческом какие темы выбирать,alen,test,0,llm_draft
+177,"зачем нужна военная кафедра, какая цель",alen,test,0,llm_draft
+178,когда подавать доки на военку,alen,test,0,llm_draft
+179,что в памятке студента для военки,alen,test,0,llm_draft
+180,если завалил психотест на военку,alen,dev,0,llm_draft
+181,что за оборудование на военной кафедре,alen,test,0,llm_draft
+182,computer science and engineering магистратура профильные предметы,alen,test,0,llm_draft
+183,digital public administration какой профильный предмет,alen,test,0,llm_draft
+184,phd computer science цель программы,alen,dev,0,llm_draft
+185,управление проектами магистратура про что,alen,test,0,llm_draft
+186,8D04102 что за докторантура,alen,dev,0,llm_draft
+187,"как ставят оценки, рейтинговая система",alen,test,0,llm_draft
+188,какие бывают занятия лекции семинары лабы,alen,test,0,llm_draft
+189,кредитная технология обучения что это,alen,test,0,llm_draft
+190,экзамен по предмету в какой форме сдается,alen,test,0,llm_draft
+191,онлайн пары как проходят,alen,dev,0,llm_draft
+192,как связаться с приемкой,alen,test,0,llm_draft
+193,как получить консультацию по поступлению,alen,test,0,llm_draft
+194,"где находится аиту, какая улица",alen,test,0,llm_draft
+195,"график работы, обед во сколько",alen,test,0,llm_draft
+196,телефон канцелярии,alen,dev,0,llm_draft
+197,как провести ивент в коворкинге,alen,test,0,llm_draft
+198,софт скиллы развивают как-то?,alen,test,0,llm_draft
+199,с какими компаниями сотрудничает универ,alen,test,0,llm_draft
+200,краковский политех это где,alen,dev,0,llm_draft
+201,mvp в аиту что это такое,alen,dev,0,llm_draft
+202,проходной балл в кбту,alen,test,1,llm_draft
+203,как варить пельмени,alen,dev,1,llm_draft
+204,лучший ноутбук для программирования,alen,dev,1,llm_draft
+205,как доехать до аэропорта астаны,alen,test,1,llm_draft
+206,что такое квантовый компьютер,alen,dev,1,llm_draft
+207,сколько стоит снять квартиру в астане,alen,dev,1,llm_draft
+208,как получить права на машину,alen,dev,1,llm_draft
+209,как будет спасибо по-английски,alen,test,1,llm_draft
+210,какой сегодня день недели,alen,test,1,llm_draft
+211,где учиться на врача в казахстане,alen,dev,1,llm_draft

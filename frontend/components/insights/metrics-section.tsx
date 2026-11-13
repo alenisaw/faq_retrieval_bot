@@ -24,21 +24,26 @@ const ULTRA = "#2f45d8";
 const ULTRA_SOFT = "#9aa6ee";
 
 const PROTOCOL_TEXT: Record<string, string> = {
-  test: "ручной тестовый набор (протокол A, запросы, которых нет в базе)",
+  test: "тестовый набор (протокол A: запросы в стиле абитуриентов, которых нет в базе)",
   loo: "leave-one-out по перефразам из самой базы (протокол B)",
 };
 
 const num = (r: Row, k: string) => (typeof r[k] === "number" ? (r[k] as number) : NaN);
 
+const fixed = (x: number, d: number) => (Number.isFinite(x) ? x.toFixed(d) : "—");
+
+type Protocol = "test" | "loo";
+
 export function MetricsSection() {
-  const [table, setTable] = useState<MetricsTable | null>(null);
+  const [tables, setTables] = useState<Record<Protocol, MetricsTable> | null>(null);
+  const [choice, setChoice] = useState<Protocol | null>(null);
   const [failed, setFailed] = useState<string | null>(null);
 
   useEffect(() => {
     (async () => {
       try {
-        const test = await api.metrics("test");
-        setTable(test.rows.length ? test : await api.metrics("loo"));
+        const [test, loo] = await Promise.all([api.metrics("test"), api.metrics("loo")]);
+        setTables({ test, loo });
       } catch (e) {
         setFailed(e instanceof Error ? e.message : "Метрики недоступны.");
       }
@@ -46,7 +51,10 @@ export function MetricsSection() {
   }, []);
 
   if (failed) return <p className="text-signal">{failed}</p>;
-  if (!table) return <Skeleton className="h-72 w-full" />;
+  if (!tables) return <Skeleton className="h-72 w-full" />;
+  const available = (["test", "loo"] as Protocol[]).filter((p) => tables[p].rows.length);
+  const current = choice && available.includes(choice) ? choice : (available[0] ?? "test");
+  const table = tables[current];
   if (!table.rows.length)
     return <p className="text-ink-soft">Прогонов ещё нет: запустите пункт 4 меню или `python -m src.experiments`.</p>;
 
@@ -58,8 +66,11 @@ export function MetricsSection() {
     "MRR@10": +num(r, "mrr@10").toFixed(3),
     "P@1": +num(r, "p@1").toFixed(3),
   }));
+  // подписываем только топ-3 и baseline, иначе подписи быстрых методов наезжают друг на друга
+  const labelled = new Set([...rows.slice(0, 3).map((r) => r.method), "rule_based"]);
   const scatterData = rows.map((r) => ({
     name: methodLabel(String(r.method)),
+    label: labelled.has(r.method) ? methodLabel(String(r.method)) : "",
     latency: Math.max(num(r, "latency_mean_ms"), 0.01),
     mrr: +num(r, "mrr@10").toFixed(3),
   }));
@@ -69,6 +80,30 @@ export function MetricsSection() {
 
   return (
     <div className="space-y-12">
+      {available.length > 1 && (
+        <div
+          role="radiogroup"
+          aria-label="Протокол оценки"
+          className="inline-flex rounded-lg border border-line bg-sheet p-1"
+        >
+          {available.map((p) => (
+            <button
+              key={p}
+              role="radio"
+              aria-checked={p === current}
+              onClick={() => setChoice(p)}
+              className={
+                "rounded-md px-4 py-2 text-sm transition-colors " +
+                (p === current ? "bg-ink text-paper" : "text-ink-soft hover:text-ink")
+              }
+            >
+              {p === "test"
+                ? `Тестовый набор, ${tables.test.rows[0]?.n_queries ?? ""} запросов`
+                : "Перефразы из базы (LOO), с нейросетями"}
+            </button>
+          ))}
+        </div>
+      )}
       <p className="max-w-[68ch] text-lg">
         Лучший метод сейчас — <strong>{methodLabel(String(best.method))}</strong>: правильный ответ первым в{" "}
         {pct(num(best, "p@1"))} вопросов, MRR@10 = {num(best, "mrr@10").toFixed(2)}
@@ -77,13 +112,16 @@ export function MetricsSection() {
         )}.{" "}
         <span className="text-ink-soft">
           Оценка: {PROTOCOL_TEXT[protocol] ?? protocol}, {String(best.n_queries)} запросов.
+          {current === "test" &&
+            !rows.some((r) => String(r.method).startsWith("e5")) &&
+            " Нейросетевые методы на тесте ещё не прогнаны, их результаты — на вкладке LOO."}
         </span>
       </p>
 
       <figure>
         <figcaption className="font-medium">Качество поиска по методам</figcaption>
         <p className="text-sm text-ink-soft">Доля от 0 до 1, чем длиннее полоса, тем лучше</p>
-        <div className="mt-4 h-[360px] w-full">
+        <div className="mt-4 w-full" style={{ height: Math.max(280, rows.length * 36) }}>
           <ResponsiveContainer width="100%" height="100%">
             <BarChart data={chartData} layout="vertical" margin={{ left: 24, right: 32 }}>
               <CartesianGrid horizontal={false} stroke={LINE} />
@@ -91,14 +129,14 @@ export function MetricsSection() {
               <YAxis
                 type="category"
                 dataKey="name"
-                width={150}
+                width={210}
                 tick={{ fill: "#172033", fontSize: 13 }}
                 stroke={LINE}
               />
               <Tooltip cursor={{ fill: "rgba(23,32,51,0.04)" }} />
               <Legend wrapperStyle={{ fontSize: 13 }} />
-              <Bar dataKey="MRR@10" fill={ULTRA} radius={[0, 3, 3, 0]} barSize={12} />
-              <Bar dataKey="P@1" fill={ULTRA_SOFT} radius={[0, 3, 3, 0]} barSize={12} />
+              <Bar dataKey="MRR@10" fill={ULTRA} radius={[0, 3, 3, 0]} barSize={12} isAnimationActive={false} />
+              <Bar dataKey="P@1" fill={ULTRA_SOFT} radius={[0, 3, 3, 0]} barSize={12} isAnimationActive={false} />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -137,8 +175,8 @@ export function MetricsSection() {
                 stroke={LINE}
               />
               <Tooltip cursor={{ strokeDasharray: "3 3" }} />
-              <Scatter data={scatterData} fill={ULTRA}>
-                <LabelList dataKey="name" position="right" style={{ fill: "#172033", fontSize: 12 }} />
+              <Scatter data={scatterData} fill={ULTRA} isAnimationActive={false}>
+                <LabelList dataKey="label" position="right" style={{ fill: "#172033", fontSize: 12 }} />
               </Scatter>
             </ScatterChart>
           </ResponsiveContainer>
@@ -169,8 +207,8 @@ export function MetricsSection() {
                   <td className="px-3 py-2">{pct(num(r, "hit@5"))}</td>
                   <td className="px-3 py-2 font-medium">{num(r, "mrr@10").toFixed(3)}</td>
                   <td className="px-3 py-2">{formatMs(num(r, "latency_mean_ms"))}</td>
-                  <td className="px-3 py-2">{num(r, "index_time_s").toFixed(2)}</td>
-                  <td className="px-3 py-2">{num(r, "peak_mem_mb").toFixed(1)}</td>
+                  <td className="px-3 py-2">{fixed(num(r, "index_time_s"), 2)}</td>
+                  <td className="px-3 py-2">{fixed(num(r, "peak_mem_mb"), 1)}</td>
                 </tr>
               ))}
             </tbody>

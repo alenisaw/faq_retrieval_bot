@@ -217,8 +217,11 @@ cd frontend && npm install && npm run dev      # http://localhost:3000 (API до
 python -m src.evaluation --protocol loo --methods all
 
 # все эксперименты: предобработка, методы, абляции, порог, классификатор, фильтр по теме
-python -m src.experiments --protocol loo        # пока нет ручного тест-набора
+python -m src.experiments --protocol loo        # протокол B: перефразы из самой базы
 python -m src.experiments --protocol test       # основной протокол A, сохраняет выбор метода для бота
+
+# разбор ошибок выбранного метода на тесте -> reports/errors/, reports/figures/err_*.png
+python -m src.error_analysis
 
 # чат-бот в консоли (метод и порог берутся из models/chatbot.json)
 python -m src.chatbot
@@ -244,6 +247,30 @@ python -m src.annotate --check                          # 3. статистик�
 python -m src.annotate --freeze                         # 4. один раз: dev 30% / test 70%
 python -m src.experiments --protocol test               # 5. финальные цифры и выбор метода для бота
 ```
+
+Текущий набор: 211 запросов (181 по теме, 30 не по теме), по 15 на каждую из 12 тем,
+заморожен: dev 58 / test 153. Запросы — черновики LLM в разговорном стиле абитуриентов
+(`origin=llm_draft`), к эталону добавлены почти одинаковые ответы-дубли из базы.
+
+### Результаты (тест, 132 запроса по теме)
+
+| Метод | P@1 | Hit@3 | MRR@10 |
+|---|---|---|---|
+| TF-IDF, символы (выбран для бота) | 0.538 | 0.712 | 0.638 |
+| TF-IDF, символы, вопрос+ответ | 0.500 | 0.667 | 0.614 |
+| Правила (baseline) | 0.462 | 0.621 | 0.559 |
+| BM25 | 0.462 | 0.583 | 0.542 |
+| Мешок слов | 0.439 | 0.591 | 0.532 |
+| TF-IDF, стеммы / леммы | 0.432 | 0.591 / 0.568 | 0.528 / 0.523 |
+
+Порог отказа подобран на dev (0.50): на тесте бот ответил бы на 3 из 21 вопроса не по теме.
+На LOO (84 запроса) нейросетевые методы впереди: e5-small с индексом «вопрос+ответ» —
+P@1 0.726, MRR 0.787, но 11 мс на запрос против 1 мс у TF-IDF. На тесте их ещё нужно
+прогнать там, где доступен Hugging Face: `python -m src.experiments --protocol test`.
+
+Разбор ошибок — [reports/errors/error_analysis.md](reports/errors/error_analysis.md):
+из 61 промаха top-1 у 20 правильный ответ на 2–3 месте, у 17 его нет в топ-10, 5 — равноценные
+ответы-дубли; на запросах со сленгом P@1 0.49 против 0.56 без него.
 
 Методы (`src/retrievers/__init__.py`, реестр `METHODS`):
 

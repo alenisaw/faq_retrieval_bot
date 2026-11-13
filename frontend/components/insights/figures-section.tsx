@@ -12,6 +12,8 @@ const CAPTIONS: Record<string, string> = {
   "eda_wordcloud.png": "Облако слов по крупным темам",
   "eda_vocab.png": "Размер словаря: исходные слова, стеммы, леммы",
   "eda_clusters.png": "Сколько вопросов приходится на один ответ",
+  "cm_topics_tfidf_char.png": "Ошибки бота по темам на тестовом наборе: строка — тема вопроса, столбец — тема ответа",
+  "cm_classifier_tfidf_lr.png": "Классификатор тем (TF-IDF + логистическая регрессия) на тестовом наборе",
   "eda_umap.html": "Карта вопросов в пространстве эмбеддингов (интерактивная)",
 };
 
@@ -28,8 +30,8 @@ export function FiguresSection() {
   if (files === null) return null;
   if (!files.length) return <p className="text-ink-soft">Графиков пока нет: запустите пункт 2 меню (EDA).</p>;
 
-  const images = files.filter((f) => /\.(png|svg)$/i.test(f));
-  const pages = files.filter((f) => /\.html$/i.test(f));
+  const images = files.filter((f) => /\.(png|svg)$/i.test(f) && f in CAPTIONS);
+  const pages = files.filter((f) => /\.html$/i.test(f) && f in CAPTIONS);
 
   return (
     <div>

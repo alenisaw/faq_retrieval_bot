@@ -12,8 +12,10 @@ export const METHOD_LABELS: Record<string, string> = {
   tfidf_word_lemma: "TF-IDF, леммы",
   tfidf_word_stem: "TF-IDF, стеммы",
   tfidf_char: "TF-IDF, символы",
+  tfidf_char_qa: "TF-IDF, символы, вопрос+ответ",
   bm25: "BM25",
   e5_small: "e5-small",
+  e5_small_qa: "e5-small, вопрос+ответ",
   minilm: "MiniLM",
   hybrid_rrf: "Гибрид (RRF)",
 };

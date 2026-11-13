@@ -16,6 +16,28 @@ export function AnswerSheet({ resp, stems }: { resp: ChatResponse; stems: string
   const scale = Math.max(1, best?.score ?? 1); // BM25 и правила дают score > 1
   const conf = confidence(resp.hits);
 
+  // Ниже порога, но близко к нему: не выдаём за ответ, а предлагаем как вариант
+  const nearMiss = !resp.answered && best && resp.threshold != null && best.score >= resp.threshold * 0.6;
+  if (nearMiss) {
+    return (
+      <section aria-live="polite" className="rounded-md border border-signal/40 bg-sheet p-6 sm:p-8">
+        <p className="flex items-center gap-2 text-sm text-signal">
+          <span aria-hidden className="size-2 rounded-full bg-signal" />
+          Уверенного ответа нет: совпадение {best.score.toFixed(2)} ниже порога {resp.threshold!.toFixed(2)}
+        </p>
+        <h2 className="mt-4 font-display text-lg font-semibold">Возможно, вы спрашиваете об этом</h2>
+        <p className="mt-1 text-sm text-ink-soft">
+          «<Highlighted text={best.question} stems={stems} />»
+        </p>
+        <p className="mt-4 max-w-[68ch] whitespace-pre-line text-[18px] leading-[1.65]">{best.answer}</p>
+        <p className="mt-6 border-t border-line pt-4 text-sm text-ink-soft">
+          Если это не то, уточните вопрос или напишите в приёмную комиссию:{" "}
+          {resp.message?.split(": ").slice(1).join(": ")}
+        </p>
+      </section>
+    );
+  }
+
   if (!resp.answered || !best) {
     return (
       <section aria-live="polite" className="rounded-md border border-signal/40 bg-sheet p-6 sm:p-8">
@@ -30,7 +52,12 @@ export function AnswerSheet({ resp, stems }: { resp: ChatResponse; stems: string
     <section aria-live="polite" aria-label="Ответ" className="space-y-6">
       <article className="rounded-md border border-line bg-sheet p-6 shadow-[0_1px_0_rgba(23,32,51,0.04)] sm:p-8">
         {conf.text && (
-          <p className={cn("mb-4 flex items-center gap-2 text-sm", conf.level === "close" ? "text-signal" : "text-ink-soft")}>
+          <p
+            className={cn(
+              "mb-4 flex items-center gap-2 text-sm",
+              conf.level === "close" ? "text-signal" : "text-ink-soft",
+            )}
+          >
             <span aria-hidden className={cn("size-2 rounded-full", DOT[conf.level])} />
             {conf.text}
           </p>

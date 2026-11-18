@@ -3,7 +3,8 @@ import json
 import pytest
 
 from src import config
-from src.chatbot import ChatBot, chat_loop, format_response, load_bot_config, save_bot_config
+from src.chatbot import (DEFAULT_METHOD, DEFAULT_THRESHOLD, ChatBot, chat_loop, format_response,
+                         load_bot_config, save_bot_config)
 from src.retrievers import build_retriever
 
 
@@ -83,7 +84,7 @@ def test_bot_config_roundtrip(tmp_path, faq_df):
 
 def test_missing_config_falls_back_to_default(tmp_path):
     cfg = load_bot_config(tmp_path / "nope.json")
-    assert cfg["method"] == "tfidf_char" and cfg["threshold"] is None
+    assert cfg["method"] == DEFAULT_METHOD == "e5_small_qa" and cfg["threshold"] == DEFAULT_THRESHOLD
 
 
 def test_broken_config_raises(tmp_path):

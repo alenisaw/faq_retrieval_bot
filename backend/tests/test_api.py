@@ -3,6 +3,7 @@ from fastapi.testclient import TestClient
 
 from src import db
 from src.api.app import create_app
+from src.chatbot import save_bot_config
 from src.evaluation import leave_one_out
 from src.retrievers import build_retriever
 
@@ -19,7 +20,9 @@ def db_path(tmp_path, faq_df):
 
 @pytest.fixture()
 def client(faq_df, db_path, tmp_path):
-    app = create_app(faq_df=faq_df, db_path=db_path, bot_config_path=tmp_path / "no_config.json", warmup=[])
+    # Явный конфиг: метод по умолчанию у бота — e5, а тестам API не нужна нейросеть
+    bot_config = save_bot_config("tfidf_char", path=tmp_path / "chatbot.json")
+    app = create_app(faq_df=faq_df, db_path=db_path, bot_config_path=bot_config, warmup=[])
     with TestClient(app) as c:
         yield c
 

@@ -26,7 +26,12 @@ from .evaluation import TOP_N, load_faq, validate_faq
 from .retrievers import BaseRetriever, TopicFilteredRetriever, build_retriever
 
 BOT_CONFIG_NAME = "chatbot.json"  # в config.MODELS_DIR
-DEFAULT_METHOD = "tfidf_char"  # без нейросети: работает сразу, без скачивания модели
+# Пока нет models/chatbot.json (models/ в .gitignore, в Docker том пустой) — выбор
+# `src.experiments --protocol test`: лучший MRR@10 на тесте (0.836), порог подобран на dev.
+# При первом запуске скачивается multilingual-e5-small (~470 МБ). Без сети: в консоли
+# `--method tfidf_char`, для API — models/chatbot.json с {"method": "tfidf_char"}.
+DEFAULT_METHOD = "e5_small_qa"
+DEFAULT_THRESHOLD = 0.854278
 DATED_NOTE = "Внимание: ответ может быть устаревшим, проверьте на admission.astanait.edu.kz"
 EXIT_WORDS = frozenset({"0", "выход", "exit", "quit", "q"})
 
@@ -98,7 +103,7 @@ class ChatBot:
     @classmethod
     def from_saved(cls, faq_df: pd.DataFrame | None = None,
                    config_path: str | Path | None = None, **kwargs) -> "ChatBot":
-        """Метод и порог из models/chatbot.json; если файла нет — DEFAULT_METHOD без порога."""
+        """Метод и порог из models/chatbot.json; если файла нет — DEFAULT_METHOD и DEFAULT_THRESHOLD."""
         cfg = load_bot_config(config_path)
         faq_df = load_faq() if faq_df is None else faq_df
         retriever = build_retriever(cfg["method"], **cfg.get("params", {}))
@@ -173,7 +178,7 @@ def load_bot_config(path: str | Path | None = None) -> dict:
     try:
         cfg = json.loads(path.read_text(encoding="utf-8"))
     except FileNotFoundError:
-        return {"method": DEFAULT_METHOD, "threshold": None, "params": {}}
+        return {"method": DEFAULT_METHOD, "threshold": DEFAULT_THRESHOLD, "params": {}}
     except json.JSONDecodeError as exc:
         raise ValueError(f"Повреждён файл {path}: {exc}") from exc
     if "method" not in cfg:
